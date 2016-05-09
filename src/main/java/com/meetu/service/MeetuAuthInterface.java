@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.easemob.server.api.IMUserAPI;
-import com.easemob.server.comm.MsgTargetType;
-import com.easemob.server.api.SendMessageAPI;
-import com.easemob.server.jersey.EasemobMessages;
-import com.easemob.server.jersey.vo.CommandMessageBody;
 import com.easemob.server.jersey.EasemobIMUsers;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.meetu.config.Constants;
 import com.meetu.core.base.BaseController;
 import com.meetu.device.domain.UserDevice;
 import com.meetu.domain.User;
-import com.meetu.photos.dao.SysMenusDao;
-import com.meetu.photos.service.SysMenusService;
 import com.meetu.tags.domain.MeetuUserSettings;
-import com.meetu.tags.service.MeetuChatListService;
 import com.meetu.tags.service.MeetuFriendsRelService;
 import com.meetu.tags.service.MeetuInterestTagsService;
 import com.meetu.tags.service.MeetuPersonalizedTagsService;
@@ -61,9 +52,6 @@ public class MeetuAuthInterface extends BaseController {
 
     @Autowired
     private MeetuInterestTagsService itService;
-
-    @Autowired
-    private MeetuChatListService chatlistService;
 
     @Autowired
     private MeetuReferencesService referencesService;

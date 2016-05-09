@@ -207,6 +207,7 @@ public class MeetuBiuInterface extends BaseController {
             // 判断BIU是否被抢
             String isGrabbed = chatlistService.checkIsGrabbed(chat_id);
             if (isGrabbed != null) {
+            	
                 // 判断biu币是否充足可以抢biu
                 Integer vc = authService.getSettingByKey(Constants.grabRewards) == null ? Constants.grabRewards_default
                         : authService.getSettingByKey(Constants.grabRewards);
