@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.dao.UserDao">
+	<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！ -->
+	<resultMap id="BaseResultMap" type="com.meetu.domain.User">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="idcard" property="idcard" jdbcType="DATE" />
+		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="password_hx" property="password_hx" jdbcType="VARCHAR" />
+		<result column="icon_url" property="icon_url" jdbcType="VARCHAR" />
+		<result column="original_icon_url" property="original_icon_url"
+			jdbcType="VARCHAR" />
+		<result column="icon_is_validate" property="icon_is_validate"
+			jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="birth_date" property="birth_date" jdbcType="DATE" />
+		<result column="height" property="height" jdbcType="INTEGER" />
+		<result column="weight" property="weight" jdbcType="INTEGER" />
+		<result column="virtual_currency" property="virtual_currency"
+			jdbcType="INTEGER" />
+		<result column="isgraduated" property="isgraduated" jdbcType="VARCHAR" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="cityname" property="cityname" jdbcType="VARCHAR" />
+		<result column="cityf" property="cityf" jdbcType="VARCHAR" />
+		<result column="hometown" property="hometown" jdbcType="VARCHAR" />
+		<result column="career" property="career" jdbcType="VARCHAR" />
+		<result column="school" property="school" jdbcType="VARCHAR" />
+		<result column="schoolname" property="schoolname" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="user_type" property="user_type" jdbcType="VARCHAR" />
+		<result column="personality_tags" property="personality_tags"
+			jdbcType="VARCHAR" />
+		<result column="interested_tags" property="interested_tags"
+			jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="register_date" property="register_date"
+			jdbcType="DATE" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="dimension" property="dimension" jdbcType="DOUBLE" />
+		<result column="disabled_status" property="disabled_status"
+			jdbcType="VARCHAR" />
+		<result column="company" property="company" jdbcType="VARCHAR" />
+		<result column="starsign" property="starsign" jdbcType="VARCHAR" />
+		<result column="password_hx" property="password_hx" jdbcType="VARCHAR" />
+		<result column="activity_time" property="activity_time"
+			jdbcType="DATE" />
+		<result column="app_status" property="app_status" jdbcType="VARCHAR" />
+		<result column="superman" property="superman" jdbcType="INTEGER" />
+	</resultMap>
+	<!-- 查询记录 -->
+	<select id="selectUserById" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select * from sys_user where id = #{id}
+	</select>
+	<select id="selectUserByCode" parameterType="int" resultMap="BaseResultMap">
+		select * from sys_user where code = #{code}
+	</select>
+	<select id="selectUserByLoginName" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		SELECT * FROM sys_user WHERE nickname = #{loginName} and user_type='admin'
+	</select>
+	<select id="checkPhone" parameterType="java.lang.String"
+		resultType="int">
+		SELECT count(*) FROM sys_user WHERE phone = #{phone}
+	</select>
+	<select id="selectCodeById" parameterType="java.lang.String"
+		resultType="int">
+		select code from sys_user where id = #{id}
+	</select>
+	<select id="selectIdByCode" parameterType="int" resultType="String">
+		select id from sys_user where code = #{code}
+	</select>
+	<select id="selectIdByPhone" parameterType="String" resultType="String">
+		select id from sys_user where phone = #{phone}
+	</select>
+	<select id="selectSexById" parameterType="String" resultType="String">
+		select sex from sys_user where id = #{id}
+	</select>
+	<select id="selectCodeByPhone" parameterType="String"
+		resultType="int">
+		select code from sys_user where phone = #{phone}
+	</select>
+	<select id="checkPhoneAndPwd" parameterType="java.lang.String"
+		resultType="String">
+		select (case password when #{password} then id else '0' end
+		) ret from sys_user where phone=#{phone}
+	</select>
+	<select id="selectAppStatus" parameterType="java.lang.String"
+		resultType="String">
+		select app_status from sys_user where id = #{id}
+	</select>
+	<!-- 判断biu币 -->
+	<select id="isEnough" parameterType="hashmap" resultType="String">
+		select
+		(case when virtual_currency >= #{vc} then '1' else '0' end)num from
+		sys_user where id=#{id}
+	</select>
+	<select id="selectVC" parameterType="java.lang.String"
+		resultType="int">
+		select virtual_currency from sys_user where id=#{id}
+	</select>
+	<!-- 获取匹配用户 -->
+	<select id="selectBiu" parameterType="hashmap" resultType="hashmap">
+	<!-- 增加查询字段a.cityf,b.city as s_city,b.age_down as s_age_down,b.age_up as s_age_up 作为反向匹配的数据 -->
+		select
+		a.id,a.code,a.personality_tags,a.interested_tags,a.description,a.sex,a.birth_date,
+		a.starsign,a.isgraduated,a.school,a.company,a.career,a.longitude,a.dimension,a.cityf,b.city
+		as s_city,b.age_down as s_age_down,b.age_up as s_age_up,b.message
+		from
+		sys_user a, meetu_user_settings b where a.id=b.user_id and b.message=1
+		and user_type not in ('admin')
+		<if test="city != null">
+			and a.cityf = #{city}
+		</if>
+		<if test="sex != null">
+			and a.sex = #{sex}
+		</if>
+		<if test="sex2 != null">
+			and b.sex = #{sex2}
+		</if>
+		<if test="age_up != null">
+			and a.birth_date between #{age_down} and #{age_up}
+		</if>
+		and a.id not in (
+		<!-- 我不感兴趣的 -->
+		select * from (select to_user_id from meetu_nolongermatch where
+		from_user_id=#{from_user_id}) t1
+		union
+		<!-- 对我不感兴趣的 -->
+		select * from (select from_user_id from meetu_nolongermatch where
+		to_user_id=#{from_user_id}) t4
+		union
+		<!-- 我已经匹配过的,在一定时间内不再匹配 -->
+		select * from (select user_id2 from meetu_references where
+		date>#{latest} and user_id1=#{from_user_id} order by date desc limit
+		25) t2
+		union
+		<!-- 5秒内接收过biu的 不再匹配 -->
+		select * from (select user_id2 from meetu_references where
+		date>#{latestT}) t3
+		union
+		<!-- 已经是好友的 -->
+		select * from (select user_id2 from meetu_friends_rel where
+		user_id1=#{from_user_id}) t5
+		)
+		and a.id != #{from_user_id}
+		and
+		a.code>#{latestCode}
+		order by a.code desc limit #{num}
+	</select>
+	<select id="selectBiuTest" parameterType="String" resultType="hashmap">
+		select
+		id,code,personality_tags,interested_tags,description,sex,birth_date,
+		starsign,isgraduated,school,company,career,longitude,dimension
+		from
+		sys_user where 1=1 and user_type not in ('admin')
+		and id = #{id}
+	</select>
+	<!-- 根据主键删除菜单 -->
+	<delete id="deleteByPrimaryKey" parameterType="String">
+		delete from
+		sys_user where id = #{id}
+	</delete>
+
+
+	<!-- 插入对象 -->
+	<insert id="insertOper">
+		insert into sys_user
+		(id,code,name,idcard,nickname,password,icon_url,original_icon_url,icon_is_validate,
+		sex,birth_date,height,weight,virtual_currency,city,cityf,hometown,career,school,phone,user_type,personality_tags,
+		interested_tags,description,register_date,longitude,dimension,disabled_status,isgraduated,
+		company,starsign,password_hx,activity_time,app_status)
+		values
+		(#{id},#{code},#{name},#{idcard},#{nickname},#{password},#{icon_url},#{original_icon_url},#{icon_is_validate},
+		#{sex},#{birth_date},#{height},#{weight},#{virtual_currency},#{city},#{cityf},#{hometown},#{career},#{school},#{phone},#{user_type},#{personality_tags},
+		#{interested_tags},#{description},#{register_date},#{longitude},#{dimension},#{disabled_status},#{isgraduated},#{company},
+		#{starsign},#{password_hx},#{activity_time},#{app_status})
+	</insert>
+	<!-- 更新updateUserInfo -->
+	<update id="updateUserInfo" parameterType="com.meetu.domain.User">
+		update sys_user
+		<set>
+			<if test="nickname != null">
+				nickname = #{nickname},
+			</if>
+			<if test="sex != null">
+				sex = #{sex},
+			</if>
+			<if test="birth_date != null">
+				birth_date = #{birth_date},
+			</if>
+			<if test="city != null">
+				city = #{city},
+			</if>
+			<if test="cityname != null">
+				cityname = #{cityname},
+			</if>
+			<if test="cityf != null">
+				cityf = #{cityf},
+			</if>
+			<if test="hometown != null">
+				hometown = #{hometown},
+			</if>
+			<if test="height != null">
+				height = #{height},
+			</if>
+			<if test="weight != null">
+				weight = #{weight},
+			</if>
+			<if test="isgraduated != null">
+				isgraduated = #{isgraduated},
+			</if>
+			<if test="career != null">
+				career = #{career},
+			</if>
+			<if test="school != null">
+				school = #{school},
+			</if>
+			<if test="schoolname != null">
+				schoolname = #{schoolname},
+			</if>
+			<if test="company != null">
+				company = #{company},
+			</if>
+			<if test="personality_tags != null">
+				personality_tags = #{personality_tags},
+			</if>
+			<if test="interested_tags != null">
+				interested_tags = #{interested_tags},
+			</if>
+			<if test="starsign != null">
+				starsign = #{starsign},
+			</if>
+			<if test="description != null">
+				description = #{description},
+			</if>
+			<if test="activity_time != null">
+				activity_time = #{activity_time},
+			</if>
+			<if test="app_status != null">
+				app_status = #{app_status}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<update id="updatePwdByPhone">
+		update sys_user set
+		password=#{password} where phone=#{phone}
+	</update>
+
+	<update id="updateIcon">
+		update sys_user set
+		icon_url=#{icon_url},icon_is_validate=#{icon_is_validate}
+		where id=#{id}
+	</update>
+	<update id="updateLocation">
+		update sys_user set
+		dimension=#{dimension},longitude=#{longitude} where id=#{id}
+	</update>
+	<update id="addVC">
+		update sys_user set virtual_currency =
+		virtual_currency + #{virtual_currency} where id=#{id}
+	</update>
+
+
+</mapper>

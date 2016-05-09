@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.photos.dao.MeetuTradingRecordDao">
+    <resultMap id="tradingRecord" type="com.meetu.photos.domain.MeetuTradingRecord">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+        <result column="bill_no" property="bill_no" jdbcType="VARCHAR" />
+        <result column="bill_type" property="bill_type" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="totalnum" property="totalnum" jdbcType="INTEGER" />
+		<result column="totalfee" property="totalfee" jdbcType="INTEGER" />
+		<result column="result" property="result" jdbcType="INTEGER" />
+		<result column="refund_result" property="refund_result" jdbcType="INTEGER" />
+		<result column="revert_result" property="revert_result" jdbcType="INTEGER" />
+		<result column="date" property="date" jdbcType="DATE" />
+    </resultMap>
+    <select id="selectAll" parameterType="java.lang.String" resultMap="tradingRecord">
+    	select * from meetu_trading_record where bill_no=#{bill_no}
+    </select>
+    <select id="selectTradeResult" parameterType="java.lang.String" resultType="int">
+    	select result from meetu_trading_record where bill_no=#{bill_no} and user_id=#{user_id}
+    </select>
+    <select id="selectTotalFee" parameterType="java.lang.String" resultType="int">
+    	select totalfee from meetu_trading_record where bill_no=#{bill_no} 
+    </select>
+    
+    <!-- 插入对象 -->
+	<insert id="insertOper" >
+		insert into meetu_trading_record (id,user_id,bill_no,bill_type,title,
+			channel,totalfee,result,refund_result,revert_result,date,totalnum) 
+			values (#{id},#{user_id},#{bill_no},#{bill_type},#{title},
+			#{channel},#{totalfee},#{result},#{refund_result},#{revert_result},#{date},#{totalnum})
+	</insert>
+	<update id="updateResult">
+		update meetu_trading_record set result=#{result} where bill_no=#{bill_no}
+	</update>
+	
+	
+</mapper>

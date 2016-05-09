@@ -1,0 +1,87 @@
+<meta charset="utf-8">
+<style>
+	.ui-jqgrid{
+		border-top:0px;
+	}
+	#gbox_bsp-base-resource-grid-table{
+		border-top: 2px solid #1582dc;
+	}
+</style>
+<div class="row-fluid" >
+	<div class="span12" style="background-color:#F8F8FF ;border-right: 3px;border-top: 2px;padding-left: 2px; margin-top: 1px; height: 555px;">
+		<span class="span9" style="margin-top: 5px; margin-left:10px; overflow-y:auto;overflow-x:auto;">
+			该用户支付成功总金额：<span class="label label-sm label-success arrowed-in">${fee!}</span>元
+		</span>
+        <div class="span9" style="margin-top: 5px; margin-left:0px;height: 500px;width:645px; overflow-y:auto;overflow-x:auto;">
+	          <table id="bsp-friends-grid-table"></table>
+	          <div id="bsp-friends-grid-pager"></div>
+        </div>
+	</div>
+</div>
+<script type='text/javascript'>
+var friends_grid_table;
+$(function(){
+	var grid_selector = "#bsp-friends-grid-table";
+	var pager_selector = "#bsp-friends-grid-pager";
+	//初始化iframe
+	Power.initIframe("${path!root}");
+	//宽度自适应
+	$(window).on('resize', function () {
+		$(grid_selector).jqGrid( 'setGridWidth', $(".page").width() );
+	 });
+	friends_grid_table = jQuery(grid_selector).jqGrid({
+		url: 'tradeQuery?userid='+'${userid!}',
+		datatype: "json",
+		mtype:"POST",
+		height: '100%',
+		colNames:['ID','订单编号','用户昵称','充值渠道','充值金额(元)','结果','充值日期'],
+		colModel:[
+			{name:'ID',index:'id', align:'left',width:'10%',hidden:true,editable: false,sortable:false},	
+			{name:'BILL_NO',index:'bill_no', align:'center',width:'13%',hidden:false,editable: false,sortable:false},
+			{name:'NICKNAME',index:'nickname', align:'center',width:'10%',editable: false,sortable:false},
+			{name:'CHANNEL',index:'channel', align:'center',width:'6%',editable: false,sortable:false},
+			{name:'TOTALFEE',index:'totalfee', align:'center',width:'7%',editable:false,sortable:false,formatter:formatFee},
+			{name:'RESULT',index:'result', align:'center',width:'8%',editable: false,sortable:true,formatter:formatResult},
+			{name:'DATE',index:'date', align:'center',width:'12%',editable: false,sortable:false,formatter:formatTime}
+		], 
+		viewrecords : true,
+		rowNum:10,
+		rowList:[10,20,30],
+		pager : pager_selector,
+		altRows: true,
+		forceFit: true,
+		sortable:true,
+		sortname:'DATE',
+		sortorder: 'DESC',
+		rownumbers: true,
+		multiselect: false,
+        multiboxonly: true,
+		loadComplete : function() {
+		},
+		autoheight:true,
+		autowidth: true
+	});
+
+	function formatTime(cellvalue, options, cell){
+		if(cellvalue!=null){
+			var date = new Date(cellvalue);
+			return date.format("yyyy-MM-dd HH:mm:ss");
+		}
+		return "";
+	};
+	function formatFee(cellvalue, options, cell){
+		return cellvalue/100;
+	};
+	function formatResult(cellvalue, options, cell){
+		if(cellvalue==1){
+			return "<span class=\"label label-sm label-success arrowed-in\">支付成功</span>";
+		}else if(cellvalue==2){
+			return "<span class=\"label label-sm label-warning arrowed-in\">支付失败</span>";
+		}else{
+			return "<span class=\"label label-sm label-primary arrowed-in\">未支付</span>";
+		}
+	};
+
+});
+
+</script>

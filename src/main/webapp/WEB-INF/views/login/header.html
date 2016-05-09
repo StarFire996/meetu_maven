@@ -1,0 +1,26 @@
+<!--[if lt IE 8]>
+<link href="${root!}/static/css/bootstrap-ie6.min.css" rel="stylesheet">
+<link href="${root!}/static/css/font-awesome-ie7.min.css" rel="stylesheet">
+<![endif]-->
+<!--[if lte IE 9]>
+<script src="${root!}/static/js/login/js/html5shiv.js"></script>
+<![endif]-->
+<header class="navbar-top navbar-top-line" style="padding:20px;">
+	<div class="container clearfix">
+		<div class="navbar-header">
+			<h1><a class="brand" href="index.html">${title!}</a></h1>
+			<h2 style="font-weight: bold;">用户登录</h2>
+			<h2 style="font-weight: bold;">系统简介</h2>
+			<h2 style="font-weight: bold;">帮助中心</h2>
+			<h2 style="font-weight: bold;">用户注册</h2>
+			<h2 style="font-weight: bold;">找回密码</h2>
+			<h2 style="font-weight: bold;font-size:20px;color:red;">${errorTitle!}</h2>
+		</div>
+		<ul class="nav" style="margin-bottom:0px;">
+			<li><a href="${root!}/main/web/profile">系统简介</a></li>
+			<li><a href="${root!}/main/web/help">帮助中心</a></li>
+			<li><a href="${root!}/main/web/client" title="电脑客户端下载！">客户端</a></li>
+			<li><i class="wel-img"></i></li>
+		</ul>
+	</div>
+</header>

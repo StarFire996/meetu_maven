@@ -1,0 +1,1031 @@
+﻿$axure.loadCurrentPage({
+  "url":"enterprise.html",
+  "generationDate":new Date(1435024561635.45),
+  "isCanvasEnabled":false,
+  "variables":["OnLoadVariable"],
+  "page":{
+    "packageId":"50105b132bd54362a4004069deee74ce",
+    "type":"Axure:Page",
+    "name":"enterprise",
+    "notes":{
+},
+    "style":{
+      "baseStyle":"627587b6038d43cca051c114ac41ad32",
+      "pageAlignment":"near",
+      "fill":{
+        "fillType":"solid",
+        "color":0xFFFFFFFF},
+      "image":null,
+      "imageHorizontalAlignment":"near",
+      "imageVerticalAlignment":"near",
+      "imageRepeat":"auto",
+      "favicon":null,
+      "sketchFactor":"0",
+      "colorStyle":"appliedColor",
+      "fontName":"应用字体",
+      "borderWidth":"0"},
+    "adaptiveStyles":{
+},
+    "interactionMap":{
+},
+    "diagram":{
+      "objects":[{
+          "id":"f52cf022143d4cb38c5888aa99cb0d60",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "verticalAlignment":"top",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFE1FED7},
+{
+                  "color":0xFFE1FED7},
+{
+                  "color":0xFFA7FE89},
+{
+                  "color":0xFFA7FE89}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":146,
+              "y":125},
+            "size":{
+              "width":170,
+              "height":50},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"4809c9e7e0684382b916215d336b947e",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "verticalAlignment":"top",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFE1FED7},
+{
+                      "color":0xFFE1FED7},
+{
+                      "color":0xFFA7FE89},
+{
+                      "color":0xFFA7FE89}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":146,
+                  "y":125},
+                "size":{
+                  "width":170,
+                  "height":50},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u0.png"}},
+{
+          "id":"1b1a33832b9a42ff9f52677f38b734b7",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "verticalAlignment":"top",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFFDEBCE},
+{
+                  "color":0xFFFDEBCE},
+{
+                  "color":0xFFFBC56B},
+{
+                  "color":0xFFFBC56B}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":352,
+              "y":125},
+            "size":{
+              "width":170,
+              "height":50},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"1a08f208c7444514a4b88aac4c682d3a",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "verticalAlignment":"top",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFFDEBCE},
+{
+                      "color":0xFFFDEBCE},
+{
+                      "color":0xFFFBC56B},
+{
+                      "color":0xFFFBC56B}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":352,
+                  "y":125},
+                "size":{
+                  "width":170,
+                  "height":50},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u2.png"}},
+{
+          "id":"494c2599de3742ef924dc82c969037f5",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "verticalAlignment":"top",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFAECEFF},
+{
+                  "color":0xFFAECEFF}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":558,
+              "y":125},
+            "size":{
+              "width":170,
+              "height":50},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"e3a0ed320ee9433ca7800397d0fb56b0",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "verticalAlignment":"top",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFAECEFF},
+{
+                      "color":0xFFAECEFF}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":558,
+                  "y":125},
+                "size":{
+                  "width":170,
+                  "height":50},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u4.png"}},
+{
+          "id":"f894418887a54d32a7917c5c650778b5",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Regular', 'Microsoft YaHei'",
+            "fontSize":"18px",
+            "verticalAlignment":"top",
+            "lineSpacing":"20px",
+            "fill":{
+              "fillType":"solid",
+              "color":0xFFFFFFFF},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":50,
+              "y":120},
+            "size":{
+              "width":60,
+              "height":60},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"ad3a778e4cd8439892e79e2c30e5ea18",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Regular', 'Microsoft YaHei'",
+                "fontSize":"18px",
+                "verticalAlignment":"top",
+                "lineSpacing":"20px",
+                "fill":{
+                  "fillType":"solid",
+                  "color":0xFFFFFFFF},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":50,
+                  "y":120},
+                "size":{
+                  "width":60,
+                  "height":60},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u6.png"}},
+{
+          "id":"c76b2bb1143a4e89bce77e010dc7d472",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Regular', 'Microsoft YaHei'",
+            "fontSize":"18px",
+            "verticalAlignment":"top",
+            "lineSpacing":"20px",
+            "fill":{
+              "fillType":"solid",
+              "color":0xFFFFFFFF},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":970,
+              "y":120},
+            "size":{
+              "width":60,
+              "height":60},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"f0a43cfa12534cb9aefe177b5048a379",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Regular', 'Microsoft YaHei'",
+                "fontSize":"18px",
+                "verticalAlignment":"top",
+                "lineSpacing":"20px",
+                "fill":{
+                  "fillType":"solid",
+                  "color":0xFFFFFFFF},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":970,
+                  "y":120},
+                "size":{
+                  "width":60,
+                  "height":60},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u6.png"}},
+{
+          "id":"88aff0febe264083af85f8240d8554a5",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"12px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFAECEFF},
+{
+                  "color":0xFFAECEFF}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":199,
+              "y":30},
+            "size":{
+              "width":50,
+              "height":30},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"ee170348f5404089bfd12ac1c2792437",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"12px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFAECEFF},
+{
+                      "color":0xFFAECEFF}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":199,
+                  "y":30},
+                "size":{
+                  "width":50,
+                  "height":30},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u10.png"}},
+{
+          "id":"9d5c7a6ef4bd4c9b8cf2391a9de77042",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"12px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFFDEBCE},
+{
+                  "color":0xFFFDEBCE},
+{
+                  "color":0xFFFBC56B},
+{
+                  "color":0xFFFBC56B}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":259,
+              "y":30},
+            "size":{
+              "width":50,
+              "height":30},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"52f5ff3131d84765a1c28c6e36c79b34",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"12px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFFDEBCE},
+{
+                      "color":0xFFFDEBCE},
+{
+                      "color":0xFFFBC56B},
+{
+                      "color":0xFFFBC56B}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":259,
+                  "y":30},
+                "size":{
+                  "width":50,
+                  "height":30},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u12.png"}},
+{
+          "id":"888a203546cf4745bced2001fa304ad6",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"12px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFE1FED7},
+{
+                  "color":0xFFE1FED7},
+{
+                  "color":0xFFA7FE89},
+{
+                  "color":0xFFA7FE89}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":319,
+              "y":30},
+            "size":{
+              "width":50,
+              "height":30},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"2f8801e3b75b42d1a0f856491fd1d428",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"12px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFE1FED7},
+{
+                      "color":0xFFE1FED7},
+{
+                      "color":0xFFA7FE89},
+{
+                      "color":0xFFA7FE89}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":319,
+                  "y":30},
+                "size":{
+                  "width":50,
+                  "height":30},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u14.png"}},
+{
+          "id":"38bc3ce9c7a94515adb07ae0d8835c83",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"12px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFFED5D8},
+{
+                  "color":0xFFFED5D8},
+{
+                  "color":0xFFFD8A91},
+{
+                  "color":0xFFFD8A91}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":379,
+              "y":30},
+            "size":{
+              "width":50,
+              "height":30},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"1ab413c719554683be8e9f716e132fd0",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"12px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFFED5D8},
+{
+                      "color":0xFFFED5D8},
+{
+                      "color":0xFFFD8A91},
+{
+                      "color":0xFFFD8A91}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":379,
+                  "y":30},
+                "size":{
+                  "width":50,
+                  "height":30},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u16.png"}},
+{
+          "id":"89009668ae3045cebddeefdfe72d8622",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"14px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"solid",
+              "color":0xFFFFFFFF},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":91,
+              "y":30},
+            "size":{
+              "width":98,
+              "height":30},
+            "borderWidth":"-1",
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"c22624f4418e4b9fa6581fed0e810841",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"14px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"solid",
+                  "color":0xFFFFFFFF},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":91,
+                  "y":30},
+                "size":{
+                  "width":98,
+                  "height":30},
+                "borderWidth":"-1",
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u18.png"}},
+{
+          "id":"1cee16f9a39c49ec9c5199c3ee22b2ad",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "fontSize":"12px",
+            "fontWeight":"700",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFFFFFBE},
+{
+                  "color":0xFFFFFFBE},
+{
+                  "color":0xFFFFFF3A},
+{
+                  "color":0xFFFFFF3A}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":439,
+              "y":30},
+            "size":{
+              "width":50,
+              "height":30},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFF999999}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"32c38e84c1f04ad18bc087c1fcd33d89",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "fontSize":"12px",
+                "fontWeight":"700",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFFFFFBE},
+{
+                      "color":0xFFFFFFBE},
+{
+                      "color":0xFFFFFF3A},
+{
+                      "color":0xFFFFFF3A}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":439,
+                  "y":30},
+                "size":{
+                  "width":50,
+                  "height":30},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFF999999}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u20.png"}},
+{
+          "id":"76fe68923ec84571b091efbbae85a017",
+          "label":"",
+          "type":"flowShape",
+          "styleType":"flowShape",
+          "visible":true,
+          "style":{
+            "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+            "verticalAlignment":"top",
+            "lineSpacing":"16px",
+            "fill":{
+              "fillType":"linearGradient",
+              "colors":[{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFE4EEFF},
+{
+                  "color":0xFFAECEFF},
+{
+                  "color":0xFFAECEFF}]},
+            "paddingTop":"10",
+            "paddingBottom":"10",
+            "location":{
+              "x":764,
+              "y":125},
+            "size":{
+              "width":170,
+              "height":50},
+            "borderFill":{
+              "fillType":"solid",
+              "color":0xFFCCCCCC}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"41cf942f1a114f57ab7e3237d425be4f",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "fontName":"'Microsoft YaHei Bold', 'Microsoft YaHei'",
+                "verticalAlignment":"top",
+                "lineSpacing":"16px",
+                "fill":{
+                  "fillType":"linearGradient",
+                  "colors":[{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFE4EEFF},
+{
+                      "color":0xFFAECEFF},
+{
+                      "color":0xFFAECEFF}]},
+                "paddingTop":"10",
+                "paddingBottom":"10",
+                "location":{
+                  "x":764,
+                  "y":125},
+                "size":{
+                  "width":170,
+                  "height":50},
+                "borderFill":{
+                  "fillType":"solid",
+                  "color":0xFFCCCCCC}},
+              "adaptiveStyles":{
+}}],
+          "images":{
+            "normal~":"images/enterprise/u4.png"}},
+{
+          "id":"785bdf9b537a40e09b7f1f3822961dff",
+          "label":"",
+          "type":"connector",
+          "styleType":"connector",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":110,
+              "y":150}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"1fb31b2b6fe14b3fbe4c7f96df21eb10",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":110,
+                  "y":150}},
+              "adaptiveStyles":{
+}}]},
+{
+          "id":"7f7e3fe2c2f04b6fa88eeeb057b54433",
+          "label":"",
+          "type":"connector",
+          "styleType":"connector",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":316,
+              "y":150}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"684507f0cb0c4bf6ad7282b53676d106",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":316,
+                  "y":150}},
+              "adaptiveStyles":{
+}}]},
+{
+          "id":"39846fd0c0494098831de854fdc8bb75",
+          "label":"",
+          "type":"connector",
+          "styleType":"connector",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":522,
+              "y":150}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"8524c2c43c75492d8b81e7a7818b3f1c",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":522,
+                  "y":150}},
+              "adaptiveStyles":{
+}}]},
+{
+          "id":"3ad98c7697814b6fb05ef5fc4d35d394",
+          "label":"",
+          "type":"connector",
+          "styleType":"connector",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":728,
+              "y":150}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"e54d01c9f86f4fa980b9d3b32e83c7d0",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":728,
+                  "y":150}},
+              "adaptiveStyles":{
+}}]},
+{
+          "id":"068134ab13c441628bc106d828aff2ed",
+          "label":"",
+          "type":"connector",
+          "styleType":"connector",
+          "visible":true,
+          "style":{
+            "location":{
+              "x":934,
+              "y":150}},
+          "adaptiveStyles":{
+},
+          "objects":[{
+              "id":"af73293d19d64213a701be9656dd5d7e",
+              "label":"",
+              "isContained":true,
+              "type":"richTextPanel",
+              "styleType":"paragraph",
+              "visible":true,
+              "style":{
+                "location":{
+                  "x":934,
+                  "y":150}},
+              "adaptiveStyles":{
+}}]}]}},
+  "masters":{
+},
+  "objectPaths":{
+    "f52cf022143d4cb38c5888aa99cb0d60":{
+      "scriptId":"u0"},
+    "4809c9e7e0684382b916215d336b947e":{
+      "scriptId":"u1"},
+    "1b1a33832b9a42ff9f52677f38b734b7":{
+      "scriptId":"u2"},
+    "1a08f208c7444514a4b88aac4c682d3a":{
+      "scriptId":"u3"},
+    "494c2599de3742ef924dc82c969037f5":{
+      "scriptId":"u4"},
+    "e3a0ed320ee9433ca7800397d0fb56b0":{
+      "scriptId":"u5"},
+    "f894418887a54d32a7917c5c650778b5":{
+      "scriptId":"u6"},
+    "ad3a778e4cd8439892e79e2c30e5ea18":{
+      "scriptId":"u7"},
+    "c76b2bb1143a4e89bce77e010dc7d472":{
+      "scriptId":"u8"},
+    "f0a43cfa12534cb9aefe177b5048a379":{
+      "scriptId":"u9"},
+    "88aff0febe264083af85f8240d8554a5":{
+      "scriptId":"u10"},
+    "ee170348f5404089bfd12ac1c2792437":{
+      "scriptId":"u11"},
+    "9d5c7a6ef4bd4c9b8cf2391a9de77042":{
+      "scriptId":"u12"},
+    "52f5ff3131d84765a1c28c6e36c79b34":{
+      "scriptId":"u13"},
+    "888a203546cf4745bced2001fa304ad6":{
+      "scriptId":"u14"},
+    "2f8801e3b75b42d1a0f856491fd1d428":{
+      "scriptId":"u15"},
+    "38bc3ce9c7a94515adb07ae0d8835c83":{
+      "scriptId":"u16"},
+    "1ab413c719554683be8e9f716e132fd0":{
+      "scriptId":"u17"},
+    "89009668ae3045cebddeefdfe72d8622":{
+      "scriptId":"u18"},
+    "c22624f4418e4b9fa6581fed0e810841":{
+      "scriptId":"u19"},
+    "1cee16f9a39c49ec9c5199c3ee22b2ad":{
+      "scriptId":"u20"},
+    "32c38e84c1f04ad18bc087c1fcd33d89":{
+      "scriptId":"u21"},
+    "76fe68923ec84571b091efbbae85a017":{
+      "scriptId":"u22"},
+    "41cf942f1a114f57ab7e3237d425be4f":{
+      "scriptId":"u23"},
+    "785bdf9b537a40e09b7f1f3822961dff":{
+      "scriptId":"u24"},
+    "1fb31b2b6fe14b3fbe4c7f96df21eb10":{
+      "scriptId":"u25"},
+    "7f7e3fe2c2f04b6fa88eeeb057b54433":{
+      "scriptId":"u26"},
+    "684507f0cb0c4bf6ad7282b53676d106":{
+      "scriptId":"u27"},
+    "39846fd0c0494098831de854fdc8bb75":{
+      "scriptId":"u28"},
+    "8524c2c43c75492d8b81e7a7818b3f1c":{
+      "scriptId":"u29"},
+    "3ad98c7697814b6fb05ef5fc4d35d394":{
+      "scriptId":"u30"},
+    "e54d01c9f86f4fa980b9d3b32e83c7d0":{
+      "scriptId":"u31"},
+    "068134ab13c441628bc106d828aff2ed":{
+      "scriptId":"u32"},
+    "af73293d19d64213a701be9656dd5d7e":{
+      "scriptId":"u33"}}});

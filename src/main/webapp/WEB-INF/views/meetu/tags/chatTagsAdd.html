@@ -1,0 +1,39 @@
+<form id="project-frm" method="post"
+	style="height: 150px; overflow-x: hidden; overflow-y: auto;">
+	<div class="tab-content"
+		style="padding: 5px; height: 100px; overflow-x: hidden; overflow-y: auto; background: #fff; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
+		<div id="chatTags" class="tab-pane in active">
+			<div class="panel-body no-padding">
+				<table class="gritter-with-table" cellspacing="1">
+					<tbody>
+						<tr>
+							<th><span style="color: red;">*</span>名称：</th>
+							<td><input id="tagName" type="text" style="width: 85%"
+								class="span3" datatype="*1-255" nullmsg="空" sucmsg=" " />
+								<div class="Validform_checktip"></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+	//提交初始化
+	var vl_frm = Power.form.validate("project-frm", "pub-project-add");
+	function submit() {
+		if (vl_frm.check()) {
+			var cmd = new Power.command("console/tags", "post");
+			cmd.setParameter("name", encodeURIComponent($("#tagName").val()));
+
+			var ret = cmd.execute("addChatTags");
+			if (!ret.error && ret.state == 1) {
+				Power.dialog.alertSuccess("添加成功!");
+				return true;
+			} else {
+				Power.dialog.alertError("添加失败!");
+				return false;
+			}
+		}
+	}
+</script>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.tags.dao.MeetuChatListDao">
+    <resultMap id="chatListMap" type="com.meetu.tags.domain.MeetuChatList">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="hxid" property="hxid" jdbcType="INTEGER" />
+        <result column="from_user_id" property="from_user_id" jdbcType="VARCHAR" />
+        <result column="to_user_id" property="to_user_id" jdbcType="VARCHAR" />
+		<result column="chat_tags" property="chat_tags" jdbcType="VARCHAR" />
+		<result column="start_date" property="start_date" jdbcType="DATE" />
+		<result column="agree_date" property="agree_date" jdbcType="DATE" />
+		<result column="delete_status" property="delete_status" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+    </resultMap>
+    <select id="selectFoundDateById" parameterType="java.lang.String" resultType="Date">
+        select start_date from meetu_chatlist where id = #{id}
+    </select>
+    <!-- 根据id查询 -->
+    <select id="selectChatListById" parameterType="java.lang.String" resultMap="chatListMap">
+        select * from meetu_chatlist where id = #{id}
+    </select>
+    <!-- 获取最新chatlist，根据用户from_user_id  -->
+    <select id="selectLatestChatByuserId" parameterType="java.lang.String" resultType="hashmap">
+    	SELECT
+			a.id,
+			b.icon_url,
+			b.sex,
+			b.code,
+			b.nickname,
+			b.birth_date,
+			b.isgraduated,
+			b.starsign,
+			b.school,
+			b.company,
+			b.career,
+			a.state,
+			a.agree_date
+		FROM
+			meetu_chatlist a,
+			sys_user b
+		WHERE
+			from_user_id=#{from_user_id} and a.to_user_id=b.id and (a.state is null or a.state=0)
+    		and a.to_user_id is not null and a.agree_date is not null
+		ORDER BY
+			a.agree_date desc
+		LIMIT 1
+    </select>
+    <select id="checkSendBiu" parameterType="java.lang.String" resultType="Date">
+		select start_date from meetu_chatlist where from_user_id=#{from_user_id} 
+			and to_user_id is null and agree_date is null order by start_date desc limit 1
+    
+    </select>
+    <!-- 根据用户ID，获取该用户未被抢的chatID，理论上只会有一条未被抢数据 -->
+    <select id="selectUngrabbedChatByUserId" parameterType="java.lang.String" resultType="String">
+    	select id from meetu_chatlist 
+    		where from_user_id = #{from_user_id} 
+    		and to_user_id is null and agree_date is null 
+    		order by start_date desc 
+    		limit 1
+    </select>
+    <!-- 获取两个用户匹配时间，两个用户只会匹配一次 -->
+    <select id="selectChatDate" parameterType="String" resultType="Date">
+    	select agree_date from meetu_chatlist where from_user_id=#{from_user_id} and to_user_id=#{to_user_id} order by start_date desc limit 1
+    </select>
+    
+    <!-- 根据from_user_id查询 -->
+    <select id="selectChatList" parameterType="java.lang.String" resultMap="chatListMap">
+        select * from meetu_chatlist where from_user_id = #{userid}
+    </select>
+    <!-- 判断该BIU是否被抢 -->
+    <select id="checkIsGrabbed" parameterType="java.lang.String" resultType="String">
+		select id from meetu_chatlist where id=#{chatlist_id} and to_user_id is null and agree_date is null
+    </select>
+    <select id="selectFounderCode" parameterType="java.lang.String" resultType="int">
+		select b.code from meetu_chatlist a,sys_user b where a.id=#{id} and a.from_user_id=b.id
+    </select>
+    <select id="selectFounderId" parameterType="java.lang.String" resultType="String">
+		select from_user_id from meetu_chatlist where id=#{id}
+    </select>
+    
+    <!-- 插入对象 -->
+	<insert id="insertOper" >
+		insert into meetu_chatlist (id,hxid,from_user_id,to_user_id,chat_tags,
+			start_date,agree_date,delete_status,state) 
+			values (#{id},#{hxid},#{from_user_id},#{to_user_id},#{chat_tags},
+			#{start_date},#{agree_date},#{delete_status},#{state})
+	</insert>
+	<update id="updateGrabInfo">
+		update meetu_chatlist set hxid=#{hxid},to_user_id=#{to_user_id},agree_date=#{agree_date} 
+		where id=#{id}
+	</update>
+	<!-- 发biu时，若该用户存在未被抢的chatlist则更新该信息 -->
+	<update id="updateChatListById">
+		update meetu_chatlist set chat_tags=#{chat_tags},start_date=#{start_date} where id=#{id}
+	</update>
+	<update id="updateState" parameterType="String">
+		update meetu_chatlist set state=1 where id=#{id}
+	</update>
+	
+	
+</mapper>

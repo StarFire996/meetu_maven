@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <#include "*/common/common.html">
+</head>
+<body class="page-body">
+	<div class="page">
+		<div class="page-header">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+					<button type="button" class="btn btn-sm btn-default"data-toggle="collapse" data-target="#s-s-1"><i class="fa fa-search"></i></button>
+				</div>
+			</div>
+			<ol class="breadcrumb" style="margin: 0; padding: 5px 0;">
+				<li><i class="fa fa-location-arrow"></i> 当前位置：</li>
+				<li>用户管理</li>
+				<li class="active">举报审核</li>
+			</ol>
+		</div>
+		<div class="row-fluid">
+			<div class="span12" id="projectlist"
+				style="overflow-x: hidden; overflow-y: auto;">
+				<div class="form-horizontal collapse" id="s-s-1">
+					<div class="form-group form-group-sm">
+<!-- 						<label class="control-label col-xs-1">被举报用户昵称：</label> -->
+<!-- 						<div class="col-xs-2"> -->
+<!-- 							<input type="text" id="nickName" name="nickName" -->
+<!-- 								class="form-control" placeholder="请输入昵称"> -->
+<!-- 						</div> -->
+						<label class="control-label col-xs-1">审核进度：</label>
+						<div class="col-xs-2" style="float:left;">  
+							<select style="height:30px;width: 150px;" id="shjd">
+							    <option value="0" selected>待审核</option>
+								<option value="1" >审核完毕</option>
+							</select>
+						</div>
+						<div class="col-xs-2 pull-right">
+							<button type="button" class="btn btn-sm btn-warning btn-search">
+								<i class="fa fa-search"></i> 查询
+							</button>
+							<button type="button" class="btn btn-sm btn-primary btn-cleanup">
+								<i class="fa fa-refresh"></i> 重置
+							</button>
+						</div>
+					</div>
+				</div>
+				<table id="project-grid-table"></table>
+				<div id="project-grid-pager"></div>
+			</div>
+		</div>
+	</div>
+
+	<script type='text/javascript'>
+var demo_monitor_grid;
+$(function(){
+	var bheight= screen.height*0.7+'px';
+	document.getElementById("projectlist").style.height=bheight;
+	var grid_selector = "#project-grid-table";
+	var pager_selector = "#project-grid-pager";
+	//初始化iframe
+	Power.initIframe("${path!root}");
+	
+	//宽度自适应
+	$(window).on('resize', function () {
+		$(grid_selector).jqGrid( 'setGridWidth', $(".page").width() );
+	 });
+	
+	demo_monitor_grid = jQuery(grid_selector).jqGrid({
+		url:"reportQuery",
+		datatype: "json",
+		mtype: "POST",
+		height: '100%',
+		colNames:['ID','举报人','被举报人','举报原因','举报日期','审核进度','审核日期','操作'],
+		colModel:[
+			{name:'ID',index:'id', align:'left',width:'10%',hidden:true,editable: false,sortable:false},	
+			{name:'FROM_USER',index:'from_user', align:'left',width:'10%',hidden:false,editable: false,sortable:false},
+			{name:'TO_USER',index:'to_user', align:'left',width:'10%',editable: false,sortable:false},	
+			{name:'REASON',index:'reason', align:'left',width:'25%',editable:false,sortable:false},
+			{name:'DATE',index:'date', align:'center',width:'10%',editable:false,sortable:false, formatter:formatTime},
+			{name:'ISCHECKED',index:'ischecked', align:'center',width:'10%',editable:false,sortable:true, formatter:formatSchedule},
+			{name:'CHECK_DATE',index:'check_date', align:'center',width:'10%',editable:false,sortable:false,formatter:formatTime},
+			{name:'OPERATION',index:'operation',align:'center',sortable:false, width:'15%',editable: false,formatter:formatOperation}
+		], 
+		viewrecords : true,
+		rowNum: 10,
+		rowList:[10,20,30],
+		pager : pager_selector,
+		altRows: true,
+		forceFit: true,
+		sortable:true,
+		sortname:'DATE',
+		sortorder: 'DESC',
+		rownumbers:true,
+		multiselect: false,
+        multiboxonly: true,
+		loadComplete : function() {
+		},
+		autoheight:true,
+		autowidth: true
+	});
+
+
+	/**
+	 *格式化操作
+	 */
+	function formatOperation(cellvalue, options, cell){
+		var id = cell["ID"];
+		return "";
+// 		return "<span class='btn btn-primary btn-mini' onclick=verify('"+id+"_2')><i class='fa fa-pencil'></i>&nbsp;审核通过</span>&nbsp;<span class='btn btn-mini btn-danger' onclick=verify('"+id+"_3')><i class='fa fa-close'></i>&nbsp;不通过</span>&nbsp";
+	};
+	function formatTime(cellvalue, options, cell) {
+		if(cellvalue!=null){
+			var date = new Date(cellvalue);
+			return date.format("yyyy-MM-dd HH:mm:ss");
+		}
+		return "";
+	};
+	function formatSchedule(cellvalue, options, cell){debugger
+		if(cellvalue != null){
+			if(cellvalue == "0"){
+				return "<span class=\"label label-sm label-primary arrowed-in\">待审核</span>";
+			}else if(cellvalue=="1"){
+				return "<span class=\"label label-sm label-success arrowed-in\">审核完毕</span>";
+			}
+		}
+		return "待审核";
+	};
+	function formatIcon(cellvalue, options, cell){
+		return '<img style="height:150px" src="'+cellvalue+'" alt="" />';
+	};
+	
+	
+});
+
+	/**
+	 * 条件查询
+	 */
+	$(".btn-search").click(function() {
+		var obj = {};
+// 		obj.nickName = $("#nickName").val();
+		obj.shjd = $("#shjd").val();
+		demo_monitor_grid.jqGrid("setGridParam", {
+			search : true,
+			postData : obj,
+			page : 1
+		}).trigger("reloadGrid");
+	});
+
+	/**
+	 *重置参数
+	 */
+	$(".btn-cleanup").click(function() {
+		var obj = {};
+// 		$("#nickName").val("");
+		$("#shjd").val("0");
+// 		obj.nickName = "";
+		obj.shjd = "0";
+		demo_monitor_grid.jqGrid("setGridParam", {
+			search : true,
+			postData : obj,
+			page : 1
+		}).trigger("reloadGrid");
+	});
+</script>
+</body>
+</html>

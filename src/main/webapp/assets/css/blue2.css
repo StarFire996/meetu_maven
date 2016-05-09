@@ -1,0 +1,48 @@
+/* RADIO */
+
+.regular-radio {
+	display: none;
+}
+
+.regular-radio + label {
+	-webkit-appearance: none;
+	background: url(../images/5x.png) no-repeat center center;
+	background-size:35px 35px;
+	display: inline-block;
+	position: relative;
+	height:35px;
+	width:35px;
+}
+
+.regular-radio:checked + label:after {
+	content: ' ';
+	width:35px;
+	height:35px;
+	position: absolute;
+	top: -1px;
+	text-shadow: 0px;
+	left: 0px;
+	font-size: 32px;
+	background:url(../images/5x_press.png) no-repeat center;
+	background-size:35px 35px;
+}
+
+.regular-radio:checked + label {
+	color: #99a1a7;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.regular-radio + label:active, .regular-radio:checked + label:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.big-radio + label {
+	padding: 16px;
+}
+
+.big-radio:checked + label:after {
+	width: 24px;
+	height: 24px;
+	left: 4px;
+	top: 4px;
+}

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.tags.dao.MeetuPersonalizedTagsDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="BaseResultMap" type="com.meetu.tags.domain.MeetuPersonalizedTags">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="create_date" property="create_date" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <select id="selectAll" parameterType="java.lang.String" resultType="hashmap">
+        select id,name,code,sex from meetu_personalized_tags where sex = #{sex}
+    </select>
+    
+    <select id="selectTags" resultType="hashmap">
+    	select id,name,code,sex from meetu_personalized_tags where id in
+    	<foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+    	#{id}
+    	</foreach>
+    </select>
+    
+	<insert id="insertOper" >
+		insert into meetu_personalized_tags (id,name,create_date,sex) 
+			values (#{id},#{name},#{create_date},#{sex})
+	</insert>
+</mapper>

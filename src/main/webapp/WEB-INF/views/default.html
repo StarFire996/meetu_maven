@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit">
+	<meta name="description" content="MeetU">
+	<meta name="author" content="inspur">
+	<title>IU</title>
+	<link rel="icon" href="${root!}/static/img/icon/favicon.ico">
+	<link href="${root!}/static/css/dzzw-base.css" rel="stylesheet">
+	<link href="${root!}/static/css/dzzw-mdicon.min.css" rel="stylesheet">
+	<link href="${root!}/static/css/dzzw-webfinal.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="${root!}/static/css/font-awesome.min.css">
+	<!-- 预加载 -->
+	<link rel="prefetch" href="${root!}/static/js/jqgrid/css/jqgrid.css">
+	<link rel="prefetch" href="${root!}/static/js/calendar/css/bootstrap-datetimepicker.css">
+	<link rel="prefetch" href="${root!}/static/js/jqgrid/js/jquery.jqgrid.min.js">
+    <link rel="prefetch" href="${root!}/static/js/jqgrid/js/jquery.jggrid.zh-cn.js">
+    <link rel="prefetch" href="${root!}/static/js/dialog/jquery.artDialog.source.js?skin=blue">
+	<link rel="prefetch" href="${root!}/static/js/calendar/bootstrap-datetimepicker.min.js">
+  	<link rel="prefetch" href="${root!}/static/js/calendar/locales/bootstrap-datetimepicker.zh-CN.js">
+ 
+</head>
+<body style="overflow:hidden;">
+<div class="navbar navbar-default navbar-fixed-top ui-navbar" id="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">  
+            <a class="navbar-brand" href="#" style="color: #fff;"><strong>IU后台管理系统</strong></a>
+        </div> 
+        <ul class="nav navbar-nav navbar-right">
+           	<li>
+           		<a  data-toggle="collapse"><i class="mdicon account-box"></i>&nbsp;${loginName!}</a>
+           	</li>
+     		<li><a href="${root!}/logout"><i class="mdicon exit-to-app"></i>&nbsp;退出</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container-fluid" id="wrapper">
+    <div class="row" id="inner">
+        <div class="col-xs-2" id="left">
+            <div class="ui-sidebar">
+                <ul class="nav first-menu-bar">
+                	<li class="nav-header">
+                        <a href="#"  title="MeetU"  style="padding:8px 0;" onclick="">
+                            <img alt="MeetU" src="${root!}/static/img/icon/logo.png" class="img-circle">
+                            <br>
+                        </a>
+                    </li>
+
+                    <#if navMenus??>
+                    <#list navMenus as menu>
+                      	<li class="dropdown dropdown-hover"  name="${menu.ID!}">
+	                        <a class="dropdown-toggle" data-toggle="dropdown"  href="#"  ref="${menu.PATH!}" code="${menu.ID!}">
+	                            <i class="mdicon ${menu.ICON!'home'}"></i>
+	                            <span>${menu.NAME!}</span>
+	                        </a>
+	                        <#if navLen==(menu_index+1)>
+	                        	<ul class="dropdown-menu nav-webfinal"  style="top:auto;bottom: 0px;">
+	                    	 <#else>
+	                        	<ul class="dropdown-menu nav-webfinal">
+	                        </#if>
+	                        <#list menuChild as item>
+	                        	<#if item.PARENT_ID==menu.ID>
+	                            	<li><a style="cursor: pointer;" data-toggle="collapse"  ref="${item.PATH!}" name="${item.PARENT_ID!}" path="${item.PATH!}" icon="${item.ICON!}" menu="${item.NAME!}" ><i class="mdicon ${item.ICON!}" style="font-size:18px;margin-top:5px;width:24px;float:left;"></i><span style="line-height:30px;">${item.NAME!}</span></a></li>
+	                            </#if>
+	                        </#list>
+	                        </ul>
+	                    </li>
+                    </#list>
+	                <#else>
+	                		<li><span>暂无菜单</span></li>
+	                </#if>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12" id="main-content" style="padding:0px;"> </div>
+    </div>
+</div>
+
+<!-- JavaScript --> 
+<script src="${root!}/static/js/jquery/jquery-1.11.1.js"></script>
+<script src="${root!}/static/js/bootstrap.min.js"></script> 
+<script src="${root!}/static/js/power/dzzw.webfinal.index.js"></script>
+<script>
+$(function(){
+	 /**
+	  * 系统初始化
+	  */
+	WebFinal.initApplication('${root!}');
+
+	/**
+	  *加载首页
+	  */
+	WebFinal.loadPage("${root!}/main/index");
+	/**
+	 *二级菜单页展现
+	 */
+    $('.dropdown-hover').hover(
+            function() {
+                $('.dropdown-menu', this).stop( true, true ).fadeIn('fast');
+                $(this).toggleClass('active'); 
+            },function() {
+                $('.dropdown-menu', this).stop( true, true ).fadeOut('fast');
+               	$(this).toggleClass('active'); 
+            }
+	);
+	/**
+	 *单击菜单事件
+	 */
+	var select$menu$index = 0;
+	$('.nav-webfinal> li > a').click(function(e){
+		e.preventDefault();
+		//单击后隐藏菜单
+		$(".nav-webfinal").hide();
+		//上级标签
+		var parent = $(this).parent();
+		//当前菜单的父菜单
+		var pid = $(this).attr("name");
+		//修改当前菜单状态
+		$('.first-menu-bar > li').each(function(i){
+			var name = $(this).attr("name");
+			if(pid==name){
+				select$menu$index = i;
+				//$(this).addClass("active");
+			}else{
+				$(this).removeClass("active");
+			}
+		});
+		//菜单加载
+		var url = $(this).attr("ref");
+		var menu = {};
+		menu.path = $(this).attr("path");
+		menu.menu = $(this).attr("menu");
+		menu.icon = $(this).attr("icon");
+		var iframe = WebFinal.iframe;
+		if(iframe){
+			//iframe加载
+			WebFinal.loadIframePage(url,menu,function(){
+				$("ul.first-menu-bar>li:eq("+select$menu$index+")").addClass("active");
+			});
+		}else{
+			//ajax加载
+			WebFinal.loadPage(WebFinal.rootPath+url,menu,function(){
+				$("ul.first-menu-bar>li:eq("+select$menu$index+")").addClass("active");
+			});
+		}
+	})
+	
+});
+</script>
+</body>
+</html>

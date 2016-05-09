@@ -1,0 +1,36 @@
+
+#js-calendar-widget .fc-row {
+    height: 20px !important;
+    min-height: 20px !important;
+}
+#js-calendar-widget .fc-day-number {
+    padding: 0 !important;
+    text-align: center !important;
+}
+#js-calendar-widget .fc-toolbar {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 0 !important;
+/*    background-color: #bbb;*/
+}
+#js-calendar-widget .fc-left { padding-left: 10px; }
+#js-calendar-widget .fc-right { padding-right: 10px; }
+
+#js-calendar-widget th, 
+#js-calendar-widget td {
+    border: none !important;
+}
+#js-calendar-widget .fc-button {
+    height: auto !important;
+    padding: 0 5px !important;
+    font-size: 1em;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+#js-calendar-widget {
+	margin: -15px -15px -5px -15px;
+}
+#js-calendar-widget .fc-center h2 { font-size: 14px; font-weight: bold; padding-top: 4px; }
+#js-calendar-widget .fc-state-highlight { background-color: #0090d9 !important; color: #fff; }
+

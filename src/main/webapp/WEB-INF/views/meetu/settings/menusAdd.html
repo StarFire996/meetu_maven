@@ -1,0 +1,98 @@
+<form id="project-frm" method="post"
+	style="height: 300px; overflow-x: hidden; overflow-y: auto;">
+	<div class="tab-content"
+		style="padding: 5px; height: 300px; overflow-x: hidden; overflow-y: auto; 
+			background: #fff; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
+		<div id="chatTags" class="tab-pane in active">
+			<div class="panel-body no-padding">
+				<table class="gritter-with-table " cellspacing="1">
+					<tbody>
+						<tr>
+							<th><span style="color: red;">*</span>层级：</th>
+							<td><select id='level' style="margin:auto;width:85%;height:30px;" datatype="*1-255" nullmsg="空" sucmsg=" ">
+								 <option value="" selected>--- 请选择 ---</option>
+								 <option value="1">一级菜单</option>
+								 <option value="2">二级菜单</option>
+							</select><div class="Validform_checktip"></div></td>
+						</tr>
+						<tr>
+							<th><span style="color: red;">*</span>上级菜单：</th>
+							<td><select id='parentId' style="margin:auto;width:85%;height:30px;" datatype="*0-255" >
+								<option value="" selected>--- 请选择 ---</option>
+							 <#if pMenus??>
+								<#list pMenus as item>
+									<option value="${item.ID!}">${item.NAME!}</option>
+								</#list>
+							</#if>
+							</select></td>
+						</tr>
+						<tr>
+							<th><span style="color: red;">*</span>名称：</th>
+							<td><input id="menuName" type="text" style="width: 85%"
+								class="span3" datatype="*1-255" nullmsg="空" sucmsg=" " />
+								<div class="Validform_checktip"></div></td>
+						</tr>
+						<tr>
+							<th>路径：</th>
+							<td><input id="menuPath" type="text" style="width: 85%"
+								class="span3" datatype="*0-255"/></td>
+						</tr>
+						<tr>
+							<th>图标：</th>
+							<td><input id="menuIcon" type="text" style="width: 85%"
+								class="span3" datatype="*0-255"/>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</form>
+<script type="text/javascript">
+
+//提交初始化
+var vl_frm = Power.form.validate("project-frm", "pub-project-add");
+
+function submit() {
+	if (vl_frm.check()) {
+		if(name==$("#menuName").val()
+				&&level==$("#level").val()
+				&&menuPath==$("#menuPath").val()
+				&&menuIcon==$("#menuIcon").val()
+				&&parentId==$("#parentId").val()){
+			Power.dialog.alert("未修改数据!");
+		}else{
+			var cmd = new Power.command("console/settings", "post");
+			cmd.setParameter("name", encodeURIComponent($("#menuName").val()));
+			cmd.setParameter("level", encodeURIComponent($("#level").val()));
+			cmd.setParameter("path", encodeURIComponent($("#menuPath").val()));
+			cmd.setParameter("icon", encodeURIComponent($("#menuIcon").val()));
+			cmd.setParameter("parentId", encodeURIComponent($("#parentId").val()));
+
+			var ret = cmd.execute("addMenu");
+	    	if(!ret.error&&ret.state==1){
+	    		Power.dialog.alertSuccess("修改成功!");
+	    		return true;
+	    	}else{
+	    		Power.dialog.alertError("修改失败!");
+	    		return false;
+	    	}
+		}
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

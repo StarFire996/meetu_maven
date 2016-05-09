@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:task="http://www.springframework.org/schema/task"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util-4.2.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+	<mvc:annotation-driven />
+   	<!-- 扫描controller（controller层注入） 
+   	<context:component-scan base-package="com.meetu.controller,com.meetu.*.controller"/>  
+	-->
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<context:component-scan base-package="com.meetu"  use-default-filters="false"> 
+	    <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+    <task:annotation-driven/>
+    <context:annotation-config />
+    
+    
+    <!-- Handles HTTP GET requests for /static/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<mvc:resources mapping="/static/**" location="/assets2/" />
+	<mvc:resources mapping="/static/css/**" location="/assets2/css/" />
+	<mvc:resources mapping="/static/img/**" location="/assets2/img/" />
+	<mvc:resources mapping="/static/js/**" location="/assets2/js/" />
+	<mvc:resources mapping="/data/**" location="/data/" />
+	<mvc:view-controller path="/" view-name="redirect:/login" />
+	<!-- freemarker configuration -->
+	<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:properties/freemarker.properties"/>
+	</bean> 
+	<!-- freemarker viewresolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+	 	<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />  
+		<property name="prefix" value="" />
+		<property name="suffix" value=".html" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="requestContextAttribute" value="request" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="exposeRequestAttributes" value="false" />
+		<property name="exposeSessionAttributes" value="false" />
+		<property name="order" value="2"/>
+	</bean> 
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath"	value="/WEB-INF/views/" />
+		<property name="defaultEncoding" value="UTF-8" />  
+		<!--property name="freemarkerSettings" ref="freemarkerConfiguration"/--> 
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>  
+	
+	<!-- System Constant Values -->
+	<util:properties id="systemConstant" location="classpath:constant.properties"/>  
+	
+	
+   	<!-- 对模型视图添加前后缀
+   	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+      p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+    -->
+ 
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/app/**" />
+			<mvc:exclude-mapping  path="/app/auth/**" />
+			<mvc:exclude-mapping  path="/app/push/**" />
+			<bean id="authorizationInterceptor" class="com.meetu.authorization.interceptor.AuthorizationInterceptor" />
+		</mvc:interceptor>
+		
+	</mvc:interceptors>
+      
+</beans>

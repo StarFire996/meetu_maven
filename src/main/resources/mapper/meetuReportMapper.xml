@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.photos.dao.MeetuReportDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="reportMap" type="com.meetu.photos.domain.MeetuReport">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="from_user_id" property="from_user_id" jdbcType="VARCHAR" />
+        <result column="to_user_id" property="to_user_id" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="DATE" />
+		<result column="reason" property="reason" jdbcType="VARCHAR" />
+		<result column="ischecked" property="ischecked" jdbcType="INTEGER" />
+		<result column="check_date" property="check_date" jdbcType="DATE" />
+    </resultMap>
+
+    <!-- 插入对象 -->
+	<insert id="insertOper" >
+		insert into meetu_reportlist (id,from_user_id,to_user_id,date,reason,ischecked,check_date) 
+			values (#{id},#{from_user_id},#{to_user_id},#{date},#{reason},#{ischecked},#{check_date})
+	</insert>
+	<!-- 删除对象 -->
+	<delete id="deleteById" >
+	  	delete from meetu_reportlist where id = #{id}
+	</delete>
+	
+
+	
+</mapper>
