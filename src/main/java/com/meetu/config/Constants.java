@@ -100,5 +100,8 @@ public class Constants {
  	public static final String redisPassword = PropertiesUtils.getProperties().getProperty("redis.password");
  	public static final String redisPort = PropertiesUtils.getProperties().getProperty("redis.port");
  	public static final String redisTimeout = PropertiesUtils.getProperties().getProperty("redis.timeout");
+ 	
+ 	//推送服务器地址
+ 	public static final String push_service_url = PropertiesUtils.getProperties().getProperty("push_service_url");
 
 }

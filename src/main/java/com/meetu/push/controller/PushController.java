@@ -222,7 +222,7 @@ public class PushController extends BaseController {
 			userInfo.put("messageType", "0");
 
 			if (users != null && users.size() > 0) {
-				// 设置lastestCode的值
+				// 设置latestCode的值
 				RedisUtil.hset(Constants.redis_online,
 						Constants.redis_online_latestCode.concat(user.getId()),
 						users.get(users.size() - 1).get("code").toString());

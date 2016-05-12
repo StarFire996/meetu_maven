@@ -441,5 +441,13 @@ public class RedisUtil {
             returnResource(jedis);
         }
     }
-
+    
+    //根据token获取用户id
+    public static String getUserIdByToken(String token){
+    	 Jedis jedis = getJedis();
+         if (jedis == null) {
+             return null;
+         }
+    	return jedis.hget(Constants.REDIS_TOKEN_PREFIX.concat(token), "userid");
+    }
 }

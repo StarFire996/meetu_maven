@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meetu.activity.dao.ActivityDao">
+<!--设置domain类和数据库中表的字段一一对应，注意数据库字段和domain类中的字段名称不致，此处一定要！-->
+    <resultMap id="Activity" type="com.meetu.activity.domain.Activity">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="body" property="body" jdbcType="VARCHAR" />
+        <result column="create_date" property="create_date" jdbcType="BIGINT" />
+    </resultMap>
+    
+	<!-- 获取活动	-->
+	<select id="selectActivity" parameterType="java.lang.String" resultType="hashmap">
+		select body,update_date from temp_activity where id = '1' order by create_date desc limit 1
+	</select>
+	
+  	<!-- 插入活动 -->
+	<insert id="insertActivity">
+		insert into temp_activity
+		(id,body,create_date,update_date)
+		values
+		(#{id},#{body},#{create_date},#{update_date})
+	</insert>
+</mapper>

@@ -301,13 +301,12 @@ public class MeetuAuthService {
     public void handleBiuList(String userid, String chat_tags)
             throws Exception {
     	
-        String url ="http://101.200.150.226:8080/meetu_maven/app/push/pushMsgToDevices";
+        String url =Constants.push_service_url+"meetu_maven/app/push/pushMsgToDevices";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("userId", userid);
         map.put("chat_tags", chat_tags);
         
         apiService.doPost(url, map);
-        System.out.println("____2");
         
     }
 
@@ -671,7 +670,7 @@ public class MeetuAuthService {
     public void grabAddFriends_f(User user, String chat_id, String founderId, Integer founderCode) {
 
 
-    	String url ="http://101.200.150.226:8080/meetu_maven/app/push/getMsgToDevices";
+    	String url =Constants.push_service_url+"meetu_maven/app/push/getMsgToDevices";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("userId", user.getId());
         map.put("chat_id", chat_id);
@@ -679,7 +678,6 @@ public class MeetuAuthService {
         map.put("founderCode", founderCode);
         
         apiService.doPost(url, map);
-        System.out.println("____2");
     	
     }
 
