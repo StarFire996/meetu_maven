@@ -28,5 +28,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		活动时间: <input name="update_date" type="text">(格式:2022-02-12_16:50:00)<br> 
 		<input type="submit" value="提交">
 	</form>
+	
+	<div> 活动数据格式<br>
+            注意: <br>
+	1. actys 中如果要增加一个活动,需要复制大括号,一个大括号就是一个活动,活动与活动之间用","连接,最后一个活动后面不用加<br>
+	2. url前面都得有 http://<br>
+	3. cover里放的是上传到阿里云的图片<br>
+	</div>
+	<div>
+{<br>
+	"status":1, <font color="red">活动是否开启,0 关闭,1 开启</font><br>
+	"updateAt":1462961974,<font color="red">活动时间</font><br>
+	"dialog":{ <font color="red">弹窗内容</font><br>
+		"name":"xxxxxx" <font color="red">名称</font><br>
+		"cover":"xxxxxxxxx", <font color="red">封面图片链接</font><br>
+		"url":"http://xxxxxxxxx" <font color="red">封面详情链接</font><br>
+	},<br>
+	"actys":[<font color="red">具体活动</font><br>
+		{	<br>
+			"name":"xxxx", <font color="red">名称</font><br>
+			"cover":"xxxxxxxxx", <font color="red">图片链接</font><br>
+			"url":"http://xxxxxxxxx" <font color="red">详情链接</font><br>
+		},.....<br>
+	]<br>
+}  <br>
+   </div>
+	
   </body>
 </html>

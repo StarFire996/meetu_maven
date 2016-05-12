@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.meetu.activity.dao.ActivityDao;
 import com.meetu.activity.dao.ContentsDao;
@@ -33,6 +34,10 @@ public class ActivityController extends BaseController {
 	
 	@Autowired
 	private ContentsDao contentsDao;
+	
+	private static final String beginUrl="http://protect-app.oss-cn-beijing.aliyuncs.com/actys/";
+
+	private static final String endUrl="/@!user_profile_clip_circle";
 
 	/**
 	 * 设置活动内容
@@ -53,7 +58,26 @@ public class ActivityController extends BaseController {
 
 		Activity activity = new Activity();
 		activity.setId("1");
-		activity.setBody(body);
+
+		JSONObject jsonData = (JSONObject) JSONObject.parse(body);
+		JSONObject dialog = (JSONObject) jsonData.get("dialog");
+		String d_cover= dialog.getString("cover");
+		
+		d_cover=beginUrl+d_cover+endUrl;
+		dialog.put("cover", d_cover);
+		
+		JSONArray actys = jsonData.getJSONArray("actys");
+		
+		for (int i = 0; i < actys.size(); i++) {
+			JSONObject o1 = (JSONObject) actys.get(i);
+			String string = o1.getString("cover");
+			string=beginUrl+string+endUrl;
+			o1.put("cover", string);
+		}
+		
+		activity.setBody(jsonData.toString());
+		
+		
 		activity.setUpdate_date(date.getTime());
 		activity.setCreate_date(new Date());
 
@@ -102,7 +126,14 @@ public class ActivityController extends BaseController {
 	 */
 	@RequestMapping(value = "setContents", method = RequestMethod.POST)
 	public ResponseEntity<Void> setActivity(@RequestParam("body") String body) {
-		Contents contents = new Contents("2", body, new Date());
+		JSONArray jsonDate = JSONObject.parseArray(body);
+		for (int i = 0; i < jsonDate.size(); i++) {
+			JSONObject o1 = (JSONObject) jsonDate.get(i);
+			String string = o1.getString("cover");
+			string=beginUrl+string+endUrl;
+			o1.put("cover", string);
+		}
+		Contents contents = new Contents("2", jsonDate.toString(), new Date());
 		this.contentsDao.insertContents(contents);
 		return ResponseEntity.ok().build();
 	}
@@ -122,8 +153,9 @@ public class ActivityController extends BaseController {
 			String newToken = (String) request.getAttribute("token");
 
 			String contents = this.contentsDao.selectContents();
-
-			json2.put("contents", contents);
+			JSONArray array = JSONObject.parseArray(contents);
+			
+			json2.put("contents", array);
 			json2.put("token", newToken);
 
 			json.put("data", json2);
