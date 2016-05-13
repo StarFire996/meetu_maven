@@ -211,7 +211,11 @@ public class MeetuInfosInterface extends BaseController {
         } catch (Exception e) {
             json.put("state", "300");
             json.put("error", e.getMessage() + " 请联系管理员");
-            e.printStackTrace();
+            
+            if (LOGGER.isErrorEnabled()) {
+				LOGGER.error(e.getMessage());
+			}
+            
         }
         this.renderJson(response, json.toString());
     }
@@ -286,9 +290,12 @@ public class MeetuInfosInterface extends BaseController {
             debugList.add(System.currentTimeMillis() - start);
 
             if (user != null) {
+            	     
+            	
                 JSONObject userInfo = new JSONObject();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+                
+                
                 // 头像状态：0-待审核，1-审核中，2-审核通过，3-审核失败
                 userInfo.put("photoStatus",
                         user.getIcon_is_validate() == null ? "" : user.getIcon_is_validate());
@@ -358,7 +365,7 @@ public class MeetuInfosInterface extends BaseController {
                 } else {
                     userInfo.put("interested_tags", new JSONArray());
                 }
-                // 若
+                // 若不是自己查看的,则计算匹配度,访问量加1
                 if (!userid.equals(user.getId())) {
                     JSONObject hm = authService.handleMatchByUserID(userid, user.getId());
 
@@ -366,6 +373,30 @@ public class MeetuInfosInterface extends BaseController {
                     debugList.add(System.currentTimeMillis() - start);
                     hm.put("activity_time", user.getActivity_time());
                     userInfo.putAll(hm);
+                    
+                    //总访问量加1
+                    user.setTotal_num(user.getTotal_num()+1);
+                    //判断最后访问时间是否是今天
+                    Date last_visit_date = user.getLast_visit_date();
+                    if (last_visit_date!=null) {
+						SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+						String user_last_date = sdFormat.format(last_visit_date);
+						String today = sdFormat.format(new Date());
+						if (today.equals(user_last_date)) {
+							//最后访问时间是今天
+							user.setToday_num(user.getToday_num()+1);
+						}else {
+							//最后访问时间不是今天
+							user.setToday_num(1);
+						}
+					}else{
+						//第一次被访问
+						user.setToday_num(1);
+					}
+                    userService.updateUserInfo(user);
+                    userInfo.put("today_num", user.getToday_num());
+                    userInfo.put("total_num", user.getTotal_num());
+                    
                 }
 
                 JSONObject json2 = new JSONObject();

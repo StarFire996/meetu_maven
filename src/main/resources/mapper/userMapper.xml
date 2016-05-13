@@ -50,6 +50,10 @@
 			jdbcType="DATE" />
 		<result column="app_status" property="app_status" jdbcType="VARCHAR" />
 		<result column="superman" property="superman" jdbcType="INTEGER" />
+		<result column="today_num" property="today_num" jdbcType="INTEGER" />
+		<result column="total_num" property="total_num" jdbcType="INTEGER" />
+		<result column="last_visit_date" property="last_visit_date"
+			jdbcType="DATE" />
 	</resultMap>
 	<!-- 查询记录 -->
 	<select id="selectUserById" parameterType="java.lang.String"
@@ -240,6 +244,15 @@
 			</if>
 			<if test="activity_time != null">
 				activity_time = #{activity_time},
+			</if>
+			<if test="total_num != null">
+				total_num = #{total_num},
+			</if>
+			<if test="today_num != null">
+				today_num = #{today_num},
+			</if>
+			<if test="last_visit_date != null">
+				last_visit_date = #{last_visit_date},
 			</if>
 			<if test="app_status != null">
 				app_status = #{app_status}

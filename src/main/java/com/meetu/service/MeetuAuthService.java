@@ -723,7 +723,6 @@ public class MeetuAuthService {
         } else {
             Long diff = Math.abs(new Date().getTime() - latestDate.getTime());
             Integer seconds = Math.round(diff / 1000);
-            // System.out.println(new Date().toString()+"____sendBiu____checkSendBiu____"+seconds);
             if (seconds < 90) {
                 return false;
             }

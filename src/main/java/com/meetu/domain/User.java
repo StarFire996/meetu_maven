@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class User {
 
-
 	private String id;
 	private Integer code;
 	private String name;
@@ -21,6 +20,34 @@ public class User {
 	private Integer virtual_currency;
 	private String city;
 	private String cityname;
+	private Integer today_num;
+	private Integer total_num;
+	private Date last_visit_date;
+	
+	public Date getLast_visit_date() {
+		return last_visit_date;
+	}
+
+	public void setLast_visit_date(Date last_visit_date) {
+		this.last_visit_date = last_visit_date;
+	}
+
+	public Integer getToday_num() {
+		return today_num;
+	}
+
+	public void setToday_num(Integer today_num) {
+		this.today_num = today_num;
+	}
+
+	public Integer getTotal_num() {
+		return total_num;
+	}
+
+	public void setTotal_num(Integer total_num) {
+		this.total_num = total_num;
+	}
+
 	public String getCityname() {
 		return cityname;
 	}
