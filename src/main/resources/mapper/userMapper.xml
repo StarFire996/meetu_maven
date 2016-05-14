@@ -325,4 +325,8 @@
 	</update>
 
 
+
+	<select id="selectAllUserId" resultType="String" >
+		select id from sys_user
+	</select>
 </mapper>

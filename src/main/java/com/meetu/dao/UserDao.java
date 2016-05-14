@@ -37,4 +37,6 @@ public interface UserDao {
 	public String selectSexById(String userid);
 	public String selectAppStatus(String id);
 	public List<Map<String, Object>> paginate(@Param("start") int start, @Param("pageSize") int pageSize);
+	
+	public List<String> selectAllUserId();
 }

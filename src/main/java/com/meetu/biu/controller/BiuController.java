@@ -393,13 +393,13 @@ public class BiuController extends BaseController {
 				debugMap.put("反向匹配时间", System.currentTimeMillis() - start);
 				for (Map<String, Object> target : users) {
 					JSONObject json1 = new JSONObject();
-					json1.put("user_code", map.get("code"));
-					json1.put("icon_thumbnailUrl", StsService.generateCircleUrl(map.get("icon_url").toString()));
-					json1.put("nickname", map.get("nickname"));
-					json1.put("school", map.get("school"));
-					json1.put("sex", map.get("sex"));
-					json1.put("chat_tags", map.get("chat_tags"));
-					json1.put("age", Common.getAge((Date) map.get("birth_date")));
+					json1.put("user_code", target.get("code"));
+					json1.put("icon_thumbnailUrl", StsService.generateCircleUrl(target.get("icon_url").toString()));
+					json1.put("nickname", target.get("nickname"));
+					json1.put("school", target.get("school"));
+					json1.put("sex", target.get("sex"));
+					json1.put("chat_tags", target.get("chat_tags"));
+					json1.put("age", Common.getAge((Date) target.get("birth_date")));
 					
 					JSONObject hm = authService.handleMatchByUserID(userId, map.get("id").toString());
 					json1.putAll(hm);
@@ -421,9 +421,10 @@ public class BiuController extends BaseController {
 				LOGGER.error(e.getMessage());
 			}
 		}
-
+		debugMap.put("方法总时间", System.currentTimeMillis()-start);
+		
 		if (LOGGER.isInfoEnabled()) {
-			LOGGER.info("sendBiu_times : {}", debugMap);
+			LOGGER.info("getTargetBiuList : {}", debugMap);
 		}
 
 		this.renderJson(response, json.toString());
