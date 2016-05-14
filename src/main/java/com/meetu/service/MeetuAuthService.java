@@ -815,7 +815,9 @@ public class MeetuAuthService {
 				"distance",
 				Distance(user1.getLongitude(), user1.getDimension(),
 						user2.getLongitude(), user2.getDimension()));
-		Date date = chatlistService.selectChatDate(userid1, userid2);
+		Biu biu = biuService.selectBiuByUserId(userid1);
+//		Date date = chatlistService.selectChatDate(userid1, userid2);
+		Date date = biu.getLast_date();
 		// json.put("time", date==null?new Date():date);
 		json.put("time", timeInterval(new Date(), date));
 		return json;

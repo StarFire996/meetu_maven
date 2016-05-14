@@ -156,6 +156,50 @@
 		a.code>#{latestCode}
 		order by a.code desc limit #{num}
 	</select>
+	
+	
+	<!-- 获取匹配用户 -->
+	<select id="selectTargetBiuList" parameterType="hashmap" resultType="hashmap">
+	 
+		select
+		a.id,a.code,a.nickname,a.icon_url,a.sex,a.birth_date,a.starsign,a.school,a.cityf,
+		b.city as s_city,b.age_down as s_age_down,b.age_up as s_age_up,
+		c.chat_tags
+		from
+		sys_user a, meetu_user_settings b,iu_biu c 
+		where a.id=b.user_id 
+		and a.id = c.created_by
+		and user_type ='mobile'
+		<if test="city != null">
+			and a.cityf = #{city}
+		</if>
+		<if test="sex != null">
+			and a.sex = #{sex}
+		</if>
+		<if test="sex2 != null">
+			and b.sex = #{sex2}
+		</if>
+		<if test="age_up != null">
+			and a.birth_date between #{age_down} and #{age_up}
+		</if>
+		and a.id not in (
+		<!-- 我不感兴趣的 -->
+		select * from (select to_user_id from meetu_nolongermatch where
+		from_user_id=#{from_user_id}) t1
+		union
+		<!-- 对我不感兴趣的 -->
+		select * from (select from_user_id from meetu_nolongermatch where
+		to_user_id=#{from_user_id}) t4
+		union
+		<!-- 已经是好友的 -->
+		select * from (select user_id2 from meetu_friends_rel where
+		user_id1=#{from_user_id}) t5
+		)
+		and a.id != #{from_user_id}
+		order by c.last_date desc limit #{num}
+	</select>
+	
+	
 	<select id="selectBiuTest" parameterType="String" resultType="hashmap">
 		select
 		id,code,personality_tags,interested_tags,description,sex,birth_date,

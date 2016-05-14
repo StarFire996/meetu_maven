@@ -1,7 +1,10 @@
 package com.meetu.biu.controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.meetu.biu.domain.Biu;
 import com.meetu.biu.service.BiuService;
@@ -28,12 +32,15 @@ import com.meetu.photos.service.MeetuTradingRecordService;
 import com.meetu.photos.service.SysMenusService;
 import com.meetu.service.MeetuAuthService;
 import com.meetu.service.UserService;
+import com.meetu.tags.domain.MeetuUserSettings;
 import com.meetu.tags.service.MeetuChatListService;
 import com.meetu.tags.service.MeetuFriendsRelService;
 import com.meetu.tags.service.MeetuNoLongerMatchService;
 import com.meetu.tags.service.MeetuReferencesService;
 import com.meetu.tags.service.MeetuUserSettingsService;
 import com.meetu.util.Common;
+import com.meetu.util.RedisUtil;
+import com.meetu.util.StsService;
 
 @Controller
 @RequestMapping("app/biu")
@@ -205,8 +212,7 @@ public class BiuController extends BaseController {
 
 					// 向发biu用户推送一条信息
 					this.authService.pushGrabBiuMessage(userid,
-							biu.getCreated_by(), iu_biu_id,vc);
-					
+							biu.getCreated_by(), iu_biu_id, vc);
 
 					json.put("state", "200");
 					JSONObject json2 = new JSONObject();
@@ -274,9 +280,9 @@ public class BiuController extends BaseController {
 				vc = vc * biu.getAccept_num();
 
 				if (userService.isEnough(send_user_id, vc)) {
-					
-					authService.acceptBiu(biu,Integer.parseInt(grab_user_code),vc);
-					
+
+					authService.acceptBiu(biu,
+							Integer.parseInt(grab_user_code), vc);
 
 					json.put("state", "200");
 					JSONObject json2 = new JSONObject();
@@ -310,21 +316,118 @@ public class BiuController extends BaseController {
 		this.renderJson(response, json.toString());
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * 获取潜在发biu对象,按照发biu时间排序
+	 * */
+	@RequestMapping(value = "/sendBiu", method = RequestMethod.POST)
+	@ResponseBody
+	public void getTargetBiuList(HttpServletRequest request,
+			HttpServletResponse response) {
+		Long start = new Date().getTime();
+
+		Map<String, Object> debugMap = new HashMap<String, Object>();
+
+		JSONObject json = new JSONObject();
+
+		User user = new User();
+
+		try {
+
+			JSONObject data = JSONObject.parseObject(this.getPara("data"));
+			String newToken = (String) request.getAttribute("token");
+			String userId = (String) request.getAttribute("userid");
+
+			JSONObject json2 = new JSONObject();
+
+			List<Map<String, Object>> users = new ArrayList<Map<String, Object>>();
+
+			MeetuUserSettings settings = settingsService.selectByUserId(userId);// 用户设置
+
+			user = userService.selectUserById(userId);// 用户信息
+
+			String u_city = user.getCityf();
+			Integer s_age_down = settings.getAge_down();
+			Integer s_age_up = settings.getAge_up();
+			String s_city = settings.getCity();
+			String s_sex = settings.getSex();
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			if (s_city.equals("1")) { // 同城（0未知,1同城,2不限）
+				map.put("city", u_city);
+			}
+			if (s_sex.equals("1")) { // 性别："0"-未知，"1"-男，"2"-女
+				map.put("sex", "1");
+			} else if (s_sex.equals("2")) {
+				map.put("sex", "2");
+			}
+
+			map.put("sex2", user.getSex() == null ? "2" : user.getSex());
+
+			if (s_age_down != s_age_up && s_age_up != 0) { // 年龄范围
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.YEAR, -s_age_down);
+				map.put("age_up", cal.getTime());
+				cal.add(Calendar.YEAR, s_age_down - s_age_up);
+				map.put("age_down", cal.getTime());
+			}
+			map.put("from_user_id", userId);
+
+			Integer targetBiuNumbers = authService
+					.getSettingByKey(Constants.targetBiuNumbers) == null ? Constants.targetBiuNumbers_default
+					: authService.getSettingByKey(Constants.targetBiuNumbers);
+
+			map.put("num", targetBiuNumbers);
+
+			debugMap.put("设置匹配数据时间", System.currentTimeMillis() - start);
+
+			users = userService.selectBiu(map);
+
+			debugMap.put("匹配用户时间1", System.currentTimeMillis() - start);
+			int age = Common.getAge(user.getBirth_date());
+			
+			JSONArray jsonArray = new JSONArray();
+			if (users != null) {
+
+				int revMatch = Common.revMatch(u_city, age, users);
+				debugMap.put("反向匹配人数", revMatch);
+				debugMap.put("反向匹配时间", System.currentTimeMillis() - start);
+				for (Map<String, Object> target : users) {
+					JSONObject json1 = new JSONObject();
+					json1.put("user_code", map.get("code"));
+					json1.put("icon_thumbnailUrl", StsService.generateCircleUrl(map.get("icon_url").toString()));
+					json1.put("nickname", map.get("nickname"));
+					json1.put("school", map.get("school"));
+					json1.put("sex", map.get("sex"));
+					json1.put("chat_tags", map.get("chat_tags"));
+					json1.put("age", Common.getAge((Date) map.get("birth_date")));
+					
+					JSONObject hm = authService.handleMatchByUserID(userId, map.get("id").toString());
+					json1.putAll(hm);
+					jsonArray.add(json1);
+				}
+
+			}
+
+			json2.put("token", newToken);
+			json2.put("users", jsonArray);
+
+			json.put("data", json2);
+			json.put("state", "200");
+
+		} catch (Exception e) {
+			json.put("state", "300");
+			json.put("error", e.getMessage() + " 请联系管理员");
+			if (LOGGER.isErrorEnabled()) {
+				LOGGER.error(e.getMessage());
+			}
+		}
+
+		if (LOGGER.isInfoEnabled()) {
+			LOGGER.info("sendBiu_times : {}", debugMap);
+		}
+
+		this.renderJson(response, json.toString());
+	}
 
 	@Override
 	public String index(HttpServletResponse paramHttpServletResponse,
