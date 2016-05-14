@@ -117,7 +117,7 @@ public class MeetuBiuInterface extends BaseController {
 
                 user = userService.selectUserById(userid);// 用户信息
 
-                authService.handleBiuList(userid, chat_tags);
+                authService.handleBiuList(userid, chat_tags,"");
                 
                 debugList.add(System.currentTimeMillis()-start);
                 

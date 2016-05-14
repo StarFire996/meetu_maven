@@ -138,15 +138,15 @@
 		select * from (select from_user_id from meetu_nolongermatch where
 		to_user_id=#{from_user_id}) t4
 		union
-		<!-- 我已经匹配过的,在一定时间内不再匹配 -->
+		<!-- 我已经匹配过的,在一定时间内不再匹配 
 		select * from (select user_id2 from meetu_references where
 		date>#{latest} and user_id1=#{from_user_id} order by date desc limit
 		25) t2
-		union
-		<!-- 5秒内接收过biu的 不再匹配 -->
+		union -->
+		<!-- 5秒内接收过biu的 不再匹配 
 		select * from (select user_id2 from meetu_references where
 		date>#{latestT}) t3
-		union
+		union-->
 		<!-- 已经是好友的 -->
 		select * from (select user_id2 from meetu_friends_rel where
 		user_id1=#{from_user_id}) t5

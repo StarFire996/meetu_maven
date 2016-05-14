@@ -63,7 +63,7 @@ public class ActivityController extends BaseController {
 		JSONObject dialog = (JSONObject) jsonData.get("dialog");
 		String d_cover= dialog.getString("cover");
 		
-		d_cover=beginUrl+d_cover+endUrl;
+		d_cover=beginUrl+d_cover;
 		dialog.put("cover", d_cover);
 		
 		JSONArray actys = jsonData.getJSONArray("actys");
@@ -71,7 +71,7 @@ public class ActivityController extends BaseController {
 		for (int i = 0; i < actys.size(); i++) {
 			JSONObject o1 = (JSONObject) actys.get(i);
 			String string = o1.getString("cover");
-			string=beginUrl+string+endUrl;
+			string=beginUrl+string;
 			o1.put("cover", string);
 		}
 		

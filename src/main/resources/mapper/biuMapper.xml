@@ -13,7 +13,13 @@
         <result column="accept_num" property="accept_num" jdbcType="INTEGER" />
     </resultMap>
     
-    <!-- 查询记录 -->
+    <!-- 根据用户id查询记录 -->
+	<select id="selectBiuByUserId" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select * from iu_biu where created_by = #{user_id}
+	</select>
+	
+	<!-- 查询记录 -->
 	<select id="selectBiuById" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
 		select * from iu_biu where id = #{id}

@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,23 +23,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
+import com.meetu.biu.service.BiuService;
 import com.meetu.config.Constants;
 import com.meetu.core.base.BaseController;
 import com.meetu.domain.User;
-import com.meetu.photos.dao.SysMenusDao;
-import com.meetu.photos.service.MeetuReportService;
-import com.meetu.photos.service.MeetuTradingRecordService;
-import com.meetu.photos.service.SysMenusService;
+import com.meetu.grabbiu.domain.GrabBiu;
+import com.meetu.grabbiu.service.GrabBiuService;
 import com.meetu.push.service.PushService;
 import com.meetu.service.MeetuAuthService;
 import com.meetu.service.UserService;
-import com.meetu.tags.domain.MeetuChatList;
-import com.meetu.tags.domain.MeetuReferences;
 import com.meetu.tags.domain.MeetuUserSettings;
-import com.meetu.tags.domain.SysSettings;
 import com.meetu.tags.service.MeetuChatListService;
-import com.meetu.tags.service.MeetuFriendsRelService;
-import com.meetu.tags.service.MeetuNoLongerMatchService;
 import com.meetu.tags.service.MeetuReferencesService;
 import com.meetu.tags.service.MeetuUserSettingsService;
 import com.meetu.util.Common;
@@ -51,10 +45,7 @@ import com.meetu.util.StsService;
 @RequestMapping(value = "app/push")
 public class PushController extends BaseController {
 
-	public static Logger log = Logger.getLogger(PushController.class);
-
-	public static org.slf4j.Logger LOGGER = LoggerFactory
-			.getLogger(PushController.class);
+	public static Logger LOGGER = LoggerFactory.getLogger(PushController.class);
 
 	@Autowired
 	private MeetuUserSettingsService settingsService;
@@ -74,6 +65,12 @@ public class PushController extends BaseController {
 	@Autowired
 	private MeetuAuthService authService;
 
+	@Autowired
+	private BiuService biuService;
+
+	@Autowired
+	private GrabBiuService grabBiuService;
+
 	/**
 	 * 发biu推送
 	 * 
@@ -84,11 +81,14 @@ public class PushController extends BaseController {
 	@RequestMapping(value = "pushMsgToDevices", method = RequestMethod.POST)
 	public ResponseEntity<Void> pushMsgToDevices(
 			@RequestParam("userId") String userId,
-			@RequestParam("chat_tags") String chat_tags) {
+			@RequestParam("chat_tags") String chat_tags,
+			@RequestParam("iu_biu_id") String iu_biu_id) {
 		try {
-			List<String> debugList = new ArrayList<String>();
-			debugList.add(userId);
-			debugList.add(chat_tags);
+			Long start = System.currentTimeMillis();
+			Map<String, Object> debugMap = new HashMap<String, Object>();
+			debugMap.put("userId", userId);
+			debugMap.put("chat_tags", iu_biu_id);
+			debugMap.put("iu_biu_id", iu_biu_id);
 
 			List<Map<String, Object>> users = new ArrayList<Map<String, Object>>();
 
@@ -122,23 +122,6 @@ public class PushController extends BaseController {
 				map.put("age_down", cal.getTime());
 			}
 			map.put("from_user_id", userId);
-			Integer timeInterval = authService
-					.getSettingByKey(Constants.timeInterval) == null ? Constants.timeInterval_default
-					: authService.getSettingByKey(Constants.timeInterval);
-
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.SECOND, -timeInterval);
-			// 用户多长时间不能接受新的biu
-			map.put("latest", cal.getTime());
-
-			Integer timeIntervalT = authService
-					.getSettingByKey(Constants.timeIntervalT) == null ? Constants.timeIntervalT_default
-					: authService.getSettingByKey(Constants.timeIntervalT);
-
-			// Calendar cal2 = Calendar.getInstance();
-			cal.add(Calendar.SECOND, timeInterval - timeIntervalT);
-			// 用户多长时间不能接受该用户新的biu
-			map.put("latestT", cal.getTime());
 
 			Integer sendBiuNumbers = authService
 					.getSettingByKey(Constants.sendBiuNumbers) == null ? Constants.sendBiuNumbers_default
@@ -154,12 +137,17 @@ public class PushController extends BaseController {
 									Constants.redis_online_latestCode
 											.concat(userId))));
 
+			debugMap.put("设置匹配数据时间", System.currentTimeMillis() - start);
+
 			users = userService.selectBiu(map);
 
-			int age = this.getAge(user.getBirth_date());
+			debugMap.put("匹配用户时间1", System.currentTimeMillis() - start);
+			int age = Common.getAge(user.getBirth_date());
 
-			this.revMatch(u_city, age, users);
+			int revMatch = Common.revMatch(u_city, age, users);
 
+			debugMap.put("反向匹配人数1", revMatch);
+			debugMap.put("反向匹配时间1", System.currentTimeMillis() - start);
 			if (users == null) {
 				users = new ArrayList<Map<String, Object>>();
 			}
@@ -167,34 +155,22 @@ public class PushController extends BaseController {
 			if (users.size() < sendBiuNumbers) {
 				map.put("num", sendBiuNumbers - users.size());
 				map.put("latestCode", 10000);
-				
+
 				List<Map<String, Object>> users2 = userService.selectBiu(map);
-				
-				
+				debugMap.put("匹配用户时间2", System.currentTimeMillis() - start);
+
 				if (users2 != null && users2.size() > 0) {
-					
-					this.revMatch(u_city, age, users2);
+
+					int revMatch2 = Common.revMatch(u_city, age, users2);
+
+					debugMap.put("反向匹配人数2", revMatch2);
+					debugMap.put("反向匹配时间2", System.currentTimeMillis() - start);
 					// 设置lastestCode的值
 					users.addAll(users2);
 				}
 			}
 
 			// 发biu时，若该用户存在未被抢的chatlist则更新该信息,更新话题标签时间
-			String from_user_id = chatlistService
-					.selectUngrabbedChatByUserId(user.getId());
-			MeetuChatList chatList = new MeetuChatList();
-			if (from_user_id != null) {
-				chatList.setId(from_user_id);
-				chatList.setChat_tags(chat_tags);
-				chatList.setStart_date(new Date());
-				chatlistService.updateChatListById(chatList);
-			} else {
-				chatList.setId(Common.generateId());
-				chatList.setChat_tags(chat_tags);
-				chatList.setFrom_user_id(user.getId());
-				chatList.setStart_date(new Date());
-				chatlistService.insertOper(chatList);
-			}
 
 			JSONObject json = new JSONObject();
 			JSONObject userInfo = new JSONObject();
@@ -216,9 +192,10 @@ public class PushController extends BaseController {
 					user.getCareer() == null ? " " : user.getCareer());
 			userInfo.put("user_code", user.getCode().toString());
 			userInfo.put("time", new Date());
-			userInfo.put("chat_id", chatList.getId());
+			userInfo.put("chat_tags", chat_tags);
+			userInfo.put("iu_biu_id", iu_biu_id);
 
-			// 三种推送，"0"收到的biu，"1"通知用户你的biu被抢了，"2"通知用户推荐给你的biu已经被抢了
+			// 三种推送，"0"收到的biu，"1"通知用户你的biu被抢了
 			userInfo.put("messageType", "0");
 
 			if (users != null && users.size() > 0) {
@@ -230,19 +207,11 @@ public class PushController extends BaseController {
 					if (!json.containsKey(users.get(i).get("code").toString())) {
 
 						json.put(users.get(i).get("code").toString(), i);
-						MeetuReferences references = new MeetuReferences();
-						references.setId(Common.generateId());
-						references.setChat_id(chatList.getId());
-						references.setDate(new Date());
-						references.setUser_id1(user.getId());
-						references.setUser_id2(users.get(i).get("id")
-								.toString());
-						references.setUser_code2((Integer) users.get(i).get(
-								"code"));
-						referencesService.insertOper(references);
+						// 计算匹配度 推送
+						JSONObject matchJson = authService.handleMatchByUserID(
+								userId, users.get(i).get("id").toString());
 
-						userInfo.put("reference_id", references.getId());
-
+						userInfo.putAll(matchJson);
 						// 推送消息
 						pushService.pushMsgToSingleDevice(users.get(i)
 								.get("id").toString(), userInfo);
@@ -250,89 +219,19 @@ public class PushController extends BaseController {
 					}
 				}
 
-				debugList.add("个数：" + json.size());
+				debugMap.put("推送数量", json.size());
 				json = null;
 			}
 
-			LoggerUtils.setLogger("pushMsgToDevices", debugList);
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("pushMsgToDevices: {}", debugMap);
+			}
 
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	}
-
-	/**
-	 * 反向筛选用户
-	 * 
-	 * @param u_city
-	 * @param age
-	 * @param users
-	 */
-	private void revMatch(String u_city, int age,
-			List<Map<String, Object>> users) {
-		List<Map<String, Object>> removeList = new ArrayList<Map<String, Object>>();
-		int count = 0;
-		for (Map<String, Object> map : users) {
-			String s_city = map.get("s_city").toString();
-			String cityf = map.get("cityf").toString();
-			int s_age_down = (int) map.get("s_age_down");
-			int s_age_up = (int) map.get("s_age_up");
-			//只有用户同城限制打开的时候,并且两个人城市不相同,才向移除列表中添加
-			if (s_city.equals("1") && !cityf.equals(u_city)) {
-				removeList.add(map);
-				count++;
-				continue;
-			}
-			//当不满足用户年龄范围限制的时候,向移除列表中添加
-			if (s_age_down != s_age_up && s_age_up != 0) {
-				if (age > s_age_up || age < s_age_down) {
-					removeList.add(map);
-					count++;
-					continue;
-				}
-			}
-		}
-		users.removeAll(removeList);
-		if (LOGGER.isInfoEnabled()) {
-			LOGGER.info("反向匹配移除用户数 :{}", count);
-		}
-	}
-
-	/**
-	 * 通过出生日期计算年龄
-	 * 
-	 * @param birthDate
-	 * @return
-	 */
-	private int getAge(Date birthDate) {
-
-		if (birthDate == null)
-			throw new RuntimeException("出生日期不能为null");
-
-		int age = 0;
-
-		Date now = new Date();
-
-		SimpleDateFormat format_y = new SimpleDateFormat("yyyy");
-		SimpleDateFormat format_M = new SimpleDateFormat("MM");
-
-		String birth_year = format_y.format(birthDate);
-		String this_year = format_y.format(now);
-
-		String birth_month = format_M.format(birthDate);
-		String this_month = format_M.format(now);
-
-		// 初步，估算
-		age = Integer.parseInt(this_year) - Integer.parseInt(birth_year);
-
-		// 如果未到出生月份，则age - 1
-		if (this_month.compareTo(birth_month) < 0)
-			age -= 1;
-		if (age < 0)
-			age = 0;
-		return age;
 	}
 
 	/**
@@ -397,6 +296,47 @@ public class PushController extends BaseController {
 			}
 
 			return ResponseEntity.status(HttpStatus.OK).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	}
+
+	/**
+	 * 
+	 * 向发biu用户推送抢biu用户信息
+	 * 
+	 * @param grab_user_id
+	 * @param send_user_id
+	 * @param iu_biu_id
+	 * @return
+	 */
+	@RequestMapping(value = "pushGrabBiuMessage", method = RequestMethod.POST)
+	public ResponseEntity<Void> pushGrabBiuMessage(
+			@RequestParam("grab_user_code") Integer grab_user_code,
+			@RequestParam("send_user_id") String send_user_id,
+			@RequestParam("iu_biu_id") String iu_biu_id) {
+		try {
+			GrabBiu grabBiu = grabBiuService.selectGrabBiuByBiuIdAndUserCode(
+					iu_biu_id, grab_user_code);
+			if (grabBiu != null) {
+
+				// 向biu创建者发推送
+				JSONObject ms = new JSONObject();
+
+				ms.put("age", grabBiu.getAge());
+				ms.put("icon_thumbnailUrl", grabBiu.getIcon_thumbnailUrl());
+				ms.put("nickname", grabBiu.getName());
+				ms.put("school", grabBiu.getSchool());
+				ms.put("sex", grabBiu.getSex());
+				ms.put("starsign", grabBiu.getStarsign());
+				ms.put("user_code", grabBiu.getUser_code());
+
+				pushService.pushMsgToSingleDevice(send_user_id, ms);
+
+				return ResponseEntity.status(HttpStatus.OK).build();
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

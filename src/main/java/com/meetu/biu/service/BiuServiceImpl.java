@@ -13,8 +13,8 @@ public class BiuServiceImpl implements BiuService{
 	private BiuDao biuDao;
 
 	@Override
-	public Biu selectBiuById(String userid) {
-		return this.biuDao.selectBiuById(userid);
+	public Biu selectBiuById(String biuId) {
+		return this.biuDao.selectBiuById(biuId);
 	}
 
 	@Override
@@ -25,6 +25,11 @@ public class BiuServiceImpl implements BiuService{
 	@Override
 	public void updateBiu(Biu biu) {
 		this.updateBiu(biu);
+	}
+
+	@Override
+	public Biu selectBiuByUserId(String userId) {
+		return this.biuDao.selectBiuByUserId(userId);
 	}
 
 	

@@ -7,7 +7,7 @@ public class GrabBiu {
 	
 	private String id;
 	private String iu_biu_id;
-	private String user_id;
+	private Integer user_code;
 	private String icon_thumbnailUrl;
 	private String name;
 	private String sex;
@@ -17,14 +17,15 @@ public class GrabBiu {
 	private Integer age;
 	public GrabBiu() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public GrabBiu(String id, String iu_biu_id, String user_id,
+	public GrabBiu(String id, String iu_biu_id, Integer user_code,
 			String icon_thumbnailUrl, String name, String sex, String school,
 			String starsign, Integer status, Integer age) {
 		super();
 		this.id = id;
 		this.iu_biu_id = iu_biu_id;
-		this.user_id = user_id;
+		this.user_code = user_code;
 		this.icon_thumbnailUrl = icon_thumbnailUrl;
 		this.name = name;
 		this.sex = sex;
@@ -45,11 +46,11 @@ public class GrabBiu {
 	public void setIu_biu_id(String iu_biu_id) {
 		this.iu_biu_id = iu_biu_id;
 	}
-	public String getUser_id() {
-		return user_id;
+	public Integer getUser_code() {
+		return user_code;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUser_code(Integer user_code) {
+		this.user_code = user_code;
 	}
 	public String getIcon_thumbnailUrl() {
 		return icon_thumbnailUrl;
@@ -95,11 +96,13 @@ public class GrabBiu {
 	}
 	@Override
 	public String toString() {
-		return "GrabBiu [id=" + id + ", iu_biu_id=" + iu_biu_id + ", user_id="
-				+ user_id + ", icon_thumbnailUrl=" + icon_thumbnailUrl
-				+ ", name=" + name + ", sex=" + sex + ", school=" + school
-				+ ", starsign=" + starsign + ", status=" + status + ", age="
-				+ age + "]";
+		return "GrabBiu [id=" + id + ", iu_biu_id=" + iu_biu_id
+				+ ", user_code=" + user_code + ", icon_thumbnailUrl="
+				+ icon_thumbnailUrl + ", name=" + name + ", sex=" + sex
+				+ ", school=" + school + ", starsign=" + starsign + ", status="
+				+ status + ", age=" + age + "]";
 	}
+	
+	
 	
 }

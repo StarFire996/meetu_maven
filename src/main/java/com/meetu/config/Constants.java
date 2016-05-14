@@ -37,7 +37,9 @@ public class Constants {
     public final static String param_inte = "param_inte";
     public final static String param_pers_num = "param_pers_num";
     public final static String param_inte_num = "param_inte_num";
+    public final static String acceptBiuCost = "acceptBiuCost";//接受超出1个抢biu用户,要消耗的biu币
     
+    public final static Integer acceptBiuCost_default = 2;
     public final static Integer timeInterval_default = 3600;
     public final static Integer sendBiuNumbers_default = 50;
     public final static Integer timeIntervalT_default = 5;

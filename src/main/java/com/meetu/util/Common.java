@@ -2,8 +2,12 @@ package com.meetu.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -134,5 +138,75 @@ public final class Common {
 		Matcher mat=pat.matcher(realParam);
 		return mat.replaceAll("\\\\%"); 
 		
+	}
+	
+	/**
+	 * 反向筛选用户
+	 * 
+	 * @param u_city
+	 * @param age
+	 * @param users
+	 */
+	public static int revMatch(String u_city, int age,
+			List<Map<String, Object>> users) {
+		List<Map<String, Object>> removeList = new ArrayList<Map<String, Object>>();
+		int count = 0;
+		for (Map<String, Object> map : users) {
+			String s_city = map.get("s_city").toString();
+			String cityf = map.get("cityf").toString();
+			int s_age_down = (int) map.get("s_age_down");
+			int s_age_up = (int) map.get("s_age_up");
+			//只有用户同城限制打开的时候,并且两个人城市不相同,才向移除列表中添加
+			if (s_city.equals("1") && !cityf.equals(u_city)) {
+				removeList.add(map);
+				count++;
+				continue;
+			}
+			//当不满足用户年龄范围限制的时候,向移除列表中添加
+			if (s_age_down != s_age_up && s_age_up != 0) {
+				if (age > s_age_up || age < s_age_down) {
+					removeList.add(map);
+					count++;
+					continue;
+				}
+			}
+		}
+		users.removeAll(removeList);
+		return count;
+	}
+
+	/**
+	 * 通过出生日期计算年龄
+	 * 
+	 * @param birthDate
+	 * @return
+	 */
+	public static int getAge(Date birthDate) {
+
+		if (birthDate == null)
+			throw new RuntimeException("出生日期不能为null");
+
+		int age = 0;
+
+		Date now = new Date();
+
+		SimpleDateFormat format_y = new SimpleDateFormat("yyyy");
+		SimpleDateFormat format_M = new SimpleDateFormat("MM");
+
+		String birth_year = format_y.format(birthDate);
+		String this_year = format_y.format(now);
+
+		String birth_month = format_M.format(birthDate);
+		String this_month = format_M.format(now);
+
+		// 初步，估算
+		age = Integer.parseInt(this_year) - Integer.parseInt(birth_year);
+
+		// 如果未到出生月份，则age - 1
+		if (this_month.compareTo(birth_month) < 0)
+			age -= 1;
+		if (age < 0)
+			age = 0;
+		return age;
 	}
 }

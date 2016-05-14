@@ -13,6 +13,8 @@ public interface GrabBiuDao {
 	
 	public void insertOper(GrabBiu grabBiu);
 	
-	public void updateGrabBiuStatus(HashMap<String, Object> map);
+	public void updateGrabBiuStatus(GrabBiu grabBiu);
+	
+	public GrabBiu selectGrabBiuByBiuIdAndUserCode(HashMap<String, Object> map);
  
 }
